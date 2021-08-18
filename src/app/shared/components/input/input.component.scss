@@ -1,0 +1,46 @@
+@import "src/styleguide/shared";
+.il-input {
+  &.center {
+    input {
+      text-align: center;
+    }
+    .errors {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  @include il-input;
+}
+.errors {
+  color: $color-red !important;
+}
+:host ::ng-deep {
+  .mat-form-field-required-marker {
+    color: $color-red !important;
+  }
+  input.mat-input-element {
+    line-height: 20px;
+    min-height: 30px;
+    padding-left: 5px;
+  }
+  .has-border {
+    .mat-form-field-infix {
+      border: thin $color-gray-2 solid !important;
+      color: $color-black-2;
+      border-radius: 2px;
+      padding: 0;
+      margin: 0;
+    }
+    .mat-form-field-label {
+      padding-left: 5px !important;
+      padding-top: 4px;
+      color: $color-white !important;
+    }
+    .mat-form-field-underline {
+      display: none !important;
+    }
+  }
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: $color-black-2;
+  }
+}
