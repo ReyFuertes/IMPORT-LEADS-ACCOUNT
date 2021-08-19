@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'il-company-information',
-  templateUrl: './company-information.component.html',
-  styleUrls: ['./company-information.component.scss']
+  selector: 'il-sign-up-review',
+  templateUrl: './sign-up-review.component.html',
+  styleUrls: ['./sign-up-review.component.scss']
 })
-export class CompanyInformationComponent implements OnInit {
+export class SignUpReviewComponent implements OnInit {
   public imgPath: string = environment.imgPath;
   public form: FormGroup;
 
@@ -26,11 +26,10 @@ export class CompanyInformationComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  public onPrev(): void {
-    this.router.navigateByUrl('sign-up');
+  public onNext(): void {
   }
 
-  public onNext(): void {
+  public onPrev(): void {
     this.router.navigateByUrl('sign-up/users-information');
   }
 }

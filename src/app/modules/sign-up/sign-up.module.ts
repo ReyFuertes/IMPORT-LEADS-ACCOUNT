@@ -13,6 +13,9 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CompanyInformationComponent } from './components/company-information/company-information.component';
+import { UsersInformationComponent } from './components/users-information/users-information.component';
+import {MatTableModule} from '@angular/material/table';
+import { SignUpReviewComponent } from './components/sign-up-review/sign-up-review.component';
 
 const primengModules = [
   InputTextModule,
@@ -23,7 +26,8 @@ const primengModules = [
 
 const materialModules = [
   MatCardModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTableModule
 ];
 
 const routes: Routes = [
@@ -36,6 +40,12 @@ const routes: Routes = [
     }, {
       path: 'company-information',
       component: CompanyInformationComponent
+    }, {
+      path: 'users-information',
+      component: UsersInformationComponent
+    }, {
+      path: 'sign-up-review',
+      component: SignUpReviewComponent
     }]
   }
 ];
@@ -43,7 +53,9 @@ const routes: Routes = [
   declarations: [
     SignUpContainerComponent,
     EmailPasswordComponent,
-    CompanyInformationComponent
+    CompanyInformationComponent,
+    UsersInformationComponent,
+    SignUpReviewComponent
   ],
   imports: [
     ReactiveFormsModule,

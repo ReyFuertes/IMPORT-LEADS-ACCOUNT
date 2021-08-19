@@ -1,40 +1,43 @@
 <div [formGroup]="form" class="company-information-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+  <div>
+    <img class="logo" [src]="imgPath + 'logo.png'" />
+  </div>
   <mat-card>
     <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="5px">
       <div>
-        <h4>Personal Details</h4>
+        <h5>Personal Details</h5>
         <div>
           <label>{{ 'Firstname' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="firstname" placeholder="Firstname" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="firstname" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Lastname' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="lastname" placeholder="Lastname" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="lastname" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Phone Number' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="phoneNumber" placeholder="Phone Number" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="phoneNumber" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Address' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="address" placeholder="Address" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="address" floatLabel="never"></il-input>
         </div>
       </div>
       <div>
-        <h4>Company Details</h4>
+        <h5>Company Details</h5>
         <div>
           <label>{{ 'Company Name' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyName" placeholder="Company Name" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyName" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Address' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyAddress" placeholder="Company Address" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyAddress" floatLabel="never"></il-input>
         </div>
       </div>
       <div>
-        <h4>Language</h4>
+        <h5>Language</h5>
         <label>{{ 'Language' }}</label>
-        <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="language" placeholder="Language" floatLabel="never"></il-input>
+        <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="language" floatLabel="never"></il-input>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
         <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="5px">

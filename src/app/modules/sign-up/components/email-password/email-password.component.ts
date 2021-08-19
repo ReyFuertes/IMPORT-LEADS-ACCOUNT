@@ -26,4 +26,7 @@ export class EmailPasswordComponent implements OnInit {
   public onNext(): void {
     this.router.navigateByUrl('sign-up/company-information');
   }
+
+  public onPrev(): void {
+  }
 }

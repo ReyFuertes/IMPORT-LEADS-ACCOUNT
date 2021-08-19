@@ -1,0 +1,42 @@
+@import "src/styleguide/shared";
+.sign-up-review-container {
+  background-color: transparent;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 8%) !important;
+  padding-bottom: 150px;
+}
+.email-password {
+  border-bottom: thin $color-gray-3 solid;
+  margin-bottom: 20px !important;
+  padding-bottom: 15px;
+}
+.row {
+  font-size: 14px;
+  padding: 5px;
+}
+label {
+  font-size: 12px;
+}
+h5 {
+  margin-bottom: 5px;
+}
+.content {
+  div {
+    width: 100%;
+  }
+}
+:host ::ng-deep {
+  .mat-card {
+    height: auto;
+    max-width: 750px;
+    min-width: 750px;
+    padding: 40px 30px 30px 30px;
+    margin: 0 auto;
+    > div {
+      height: 100%;
+    }
+    button.il-button {
+      margin-top: 5px;
+      width: 380px;
+    }
+  }
+}
