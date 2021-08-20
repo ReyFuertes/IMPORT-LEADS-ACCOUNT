@@ -2,7 +2,7 @@
 .sign-up-review-container {
   background-color: transparent;
   box-shadow: 0 4px 16px 0 rgb(0 0 0 / 8%) !important;
-  padding-bottom: 150px;
+  padding-bottom: 10px;
 }
 .email-password {
   border-bottom: thin $color-gray-3 solid;
@@ -17,18 +17,31 @@ label {
   font-size: 12px;
 }
 h5 {
-  margin-bottom: 5px;
+  margin-bottom: 5px !important;
+  margin-left: -5px;
 }
 .content {
   div {
     width: 100%;
   }
 }
+.btn-actions {
+  margin-top: 20px;
+}
 :host ::ng-deep {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0.75em;
+  }
+  .mat-table {
+    width: 100%;
+  }
+  tr.mat-row, tr.mat-footer-row {
+    height: 40px;
+  }
   .mat-card {
     height: auto;
-    max-width: 750px;
-    min-width: 750px;
+    max-width: 950px;
+    min-width: 950px;
     padding: 40px 30px 30px 30px;
     margin: 0 auto;
     > div {

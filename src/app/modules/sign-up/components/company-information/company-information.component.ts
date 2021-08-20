@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,7 +12,13 @@ import { environment } from 'src/environments/environment';
 export class CompanyInformationComponent implements OnInit {
   public imgPath: string = environment.imgPath;
   public form: FormGroup;
-
+  public languageOptions: ISimpleItem[] = [{
+    label: 'English',
+    value: 'en'
+  }, {
+    label: 'Chinese',
+    value: 'cn'
+  }];
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       firstname: [null, Validators.required],

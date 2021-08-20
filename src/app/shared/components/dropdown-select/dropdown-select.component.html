@@ -1,0 +1,10 @@
+<div *ngIf="form" [formGroup]="form">
+  <mat-form-field appendTo="ui-sidebar" [ngClass]="{'has-border': hasBorder}" [floatLabel]="floatLabel">
+    <mat-label *ngIf="placeholder">{{ placeholder | translate }}</mat-label>
+    <mat-select [formControlName]="controlName">
+      <mat-option *ngFor="let option of options" [value]="option?.value">
+        {{option?.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

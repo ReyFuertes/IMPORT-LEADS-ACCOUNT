@@ -23,6 +23,8 @@ import { InputMaxLengthDirective } from './directives/input-maxlen.directive';
 import { CurrencyFormatterDirective } from './directives/currency-formatter.directive';
 import { customCurrencyPipe } from './pipes/custom-currency.pipe';
 import { SafePipe } from './pipes/html';
+import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
+import { MatSelectModule } from '@angular/material/select';
 
 const materialModules = [
   MatFormFieldModule,
@@ -34,7 +36,8 @@ const materialModules = [
   MatIconModule,
   MatCheckboxModule,
   MatTooltipModule,
-  MatCardModule
+  MatCardModule,
+  MatSelectModule
 ];
 
 const primeNgModules = [
@@ -45,7 +48,8 @@ const primeNgModules = [
 ];
 
 const sharedComponents = [
-  InputComponent
+  InputComponent,
+  DropdownSelectComponent
 ];
 
 const directives = [

@@ -8,36 +8,35 @@
         <h5>Personal Details</h5>
         <div>
           <label>{{ 'Firstname' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="firstname" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="firstname" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Lastname' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="lastname" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="lastname" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Phone Number' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="phoneNumber" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="phoneNumber" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Address' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="address" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="address" floatLabel="never"></il-input>
         </div>
       </div>
       <div>
         <h5>Company Details</h5>
         <div>
           <label>{{ 'Company Name' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyName" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyName" floatLabel="never"></il-input>
         </div>
         <div>
           <label>{{ 'Address' }}</label>
-          <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyAddress" floatLabel="never"></il-input>
+          <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyAddress" floatLabel="never"></il-input>
         </div>
       </div>
       <div>
         <h5>Language</h5>
-        <label>{{ 'Language' }}</label>
-        <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="language" floatLabel="never"></il-input>
+        <il-dropdown-select [hasBorder]="true" [form]="form" [options]="languageOptions" controlName="language"></il-dropdown-select>
       </div>
       <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
         <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="5px">

@@ -6,57 +6,102 @@
     <mat-card>
       <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
         <div class="email-password">
+          <h5>Login Information</h5>
           <div class="row">Email: sampleemail@gmail.com</div>
           <div class="row">Password: *****</div>
         </div>
         <div>
           <h5>Personal Details</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxFlex="47">
               <label>{{ 'Firstname' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="firstname" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="firstname" floatLabel="never"></il-input>
             </div>
             <div fxFlex="47">
               <label>{{ 'Lastname' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="lastname" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="lastname" floatLabel="never"></il-input>
             </div>
             <div fxFlex="47">
               <label>{{ 'Phone Number' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="phoneNumber" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="phoneNumber" floatLabel="never"></il-input>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="address" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="address" floatLabel="never"></il-input>
             </div>
           </div>
         </div>
         <div>
           <h5>Company Details</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxFlex="47">
               <label>{{ 'Company Name' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyName" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyName" floatLabel="never"></il-input>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="companyAddress" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyAddress" floatLabel="never"></il-input>
             </div>
           </div>
         </div>
         <div>
           <h5>Language</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxFlex="47">
-              <il-input [form]="form" [hasBorder]="true" [isFloatLabel]="true" controlName="language" floatLabel="never"></il-input>
+              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="language" floatLabel="never"></il-input>
             </div>
           </div>
         </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+
+        <div class="content">
+          <h5>Users</h5>
+          <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> ID </th>
+              <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Username </th>
+              <td mat-cell *matCellDef="let element"> {{element?.username}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> Position </th>
+              <td mat-cell *matCellDef="let element"> {{element?.position}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef> Role </th>
+              <td mat-cell *matCellDef="let element"> {{element?.role}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="company_name">
+              <th mat-header-cell *matHeaderCellDef> Company Name </th>
+              <td mat-cell *matCellDef="let element"> {{element?.company_name}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef> Phone </th>
+              <td mat-cell *matCellDef="let element"> {{element?.phone}} </td>
+            </ng-container>
+      
+            <ng-container matColumnDef="access">
+              <th mat-header-cell *matHeaderCellDef> Access </th>
+              <td mat-cell *matCellDef="let element"> {{element?.access}} </td>
+            </ng-container>
+      
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+          </table>
+        </div>
+        
+        <div class="btn-actions" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
           <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="10px">
             {{ 'PREVIOUS' }}
           </button>
           <button (click)="onNext()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
-            {{ 'NEXT' }}
+            {{ 'SUBMIT' }}
           </button>
         </div>
       </div>

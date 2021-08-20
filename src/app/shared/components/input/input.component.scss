@@ -14,14 +14,23 @@
 .errors {
   color: $color-red !important;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}
 :host ::ng-deep {
+  input:-internal-autofill-selected {
+    background-color: transparent !important;
+  }
   .mat-form-field-required-marker {
     color: $color-red !important;
   }
   input.mat-input-element {
     line-height: 20px;
-    min-height: 30px;
-    padding-left: 5px;
+    min-height: 35px;
+    padding-left: 9px;
   }
   .has-border {
     .mat-form-field-infix {

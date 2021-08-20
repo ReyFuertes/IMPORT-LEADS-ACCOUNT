@@ -10,7 +10,6 @@ import { ISimpleItem } from '../../generics/generic.model';
 })
 
 export class InputComponent extends GenericControl<ISimpleItem> implements OnChanges {
-  @Input() public floatLabel: 'always' | 'never' | 'auto';
   @Input() public isNumberOnly: boolean = false;
   @Input() public isRequired: boolean = false;
   @Input() public inputType: string = 'text';

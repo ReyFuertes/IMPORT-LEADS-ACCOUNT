@@ -10,7 +10,7 @@ export class GenericControl<T> extends GenericDestroyPageComponent {
   @Input() public item: T;
   @Input() public controlName: any;
   @Input() public form: FormGroup;
-  @Input() public isFloatLabel: boolean = false;
+  @Input() public floatLabel: 'always' | 'never' | 'auto';
   @Input() public selectedItem: T;
 
   public svgPath: string = environment.svgPath;
