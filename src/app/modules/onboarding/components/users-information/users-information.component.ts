@@ -31,6 +31,7 @@ export class UsersInformationComponent extends GenericDestroyPageComponent imple
   public onAddUser(): void {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
       width: '675px',
+      height: '375px',
       data: {
         action: 0
       }
@@ -44,6 +45,7 @@ export class UsersInformationComponent extends GenericDestroyPageComponent imple
   public onEditUser(element: any): void {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
       width: '675px',
+      height: '375px',
       data: {
         action: 1
       }

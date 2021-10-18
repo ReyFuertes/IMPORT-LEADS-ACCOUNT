@@ -15,6 +15,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { AddUserDialogComponent } from './components/add-user-dialog/add-user-dialog.component';
+import { TooltipModule } from 'primeng/tooltip';
 
 const dialogComponents = [
   AddUserDialogComponent
@@ -29,7 +30,8 @@ const materialModules = [
   MatDividerModule,
   ScrollingModule,
   MatBadgeModule,
-  MatDialogModule
+  MatDialogModule,
+  TooltipModule
 ];
 
 const primeNgModules = [

@@ -7,6 +7,9 @@
 }
 .content > div {
   width: 100%;
+  &:last-child {
+    padding-top: 10px;
+  }
 }
 label {
   font-size: 12px;

@@ -4,10 +4,10 @@
       <div fxFlex fxFlexOffset="20px">
         <h4>{{ actionText[data?.action] }} {{ 'User' }}</h4>
       </div>
-      <div fxFlex="20px"><i (click)="dialogRef.close(false)" class="pi pi-times"></i></div>
+      <div fxFlex="20px"><i pTooltip="Close" tooltipPosition="top" (click)="dialogRef.close(false)" class="pi pi-times"></i></div>
     </div>
   </div>
-  <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
     <div fxLayoutGap="20px">
       <div>
         <label>{{ 'Firstname' }}</label>
