@@ -6,7 +6,7 @@
   padding-bottom: 150px;
 }
 .content > div {
-  min-width: 380px;
+  width: 100%;
 }
 label {
   font-size: 12px;
@@ -14,10 +14,13 @@ label {
   margin-bottom: 2px;
 }
 :host ::ng-deep {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 10px;
+  }
   .mat-card {
     height: auto;
-    width: 450px;
-    padding: 40px 30px;
+    min-width: 450px;
+    padding: 25px 30px 30px;
     margin: 0 auto;
     > div {
       height: 100%;

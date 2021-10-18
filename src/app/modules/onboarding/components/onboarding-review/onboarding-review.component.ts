@@ -9,11 +9,11 @@ const DUMMY_DATA: any[] = [
   { id: 3, username: 'jamesmoore@gmail.com', Position: '', Role: 'Master', company_name: 'Test Company 3', phone: '0612345678', access: '' }
 ];
 @Component({
-  selector: 'il-sign-up-review',
-  templateUrl: './sign-up-review.component.html',
-  styleUrls: ['./sign-up-review.component.scss']
+  selector: 'il-onboarding-review',
+  templateUrl: './onboarding-review.component.html',
+  styleUrls: ['./onboarding-review.component.scss']
 })
-export class SignUpReviewComponent implements OnInit {
+export class OnboardingReviewComponent implements OnInit {
   public imgPath: string = environment.imgPath;
   public form: FormGroup;
   public columnsToDisplay = ['id', 'username', 'position', 'role', 'company_name', 'phone', 'access'];
@@ -34,9 +34,10 @@ export class SignUpReviewComponent implements OnInit {
   ngOnInit(): void { }
 
   public onNext(): void {
+    this.router.navigateByUrl('onboarding/submitted');
   }
 
   public onPrev(): void {
-    this.router.navigateByUrl('sign-up/users-information');
+    this.router.navigateByUrl('onboarding/users-information');
   }
 }

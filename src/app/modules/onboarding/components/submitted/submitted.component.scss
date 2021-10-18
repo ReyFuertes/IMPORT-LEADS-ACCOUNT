@@ -1,0 +1,18 @@
+@import "src/styleguide/shared";
+.submitted-container {
+  padding-bottom: 150px;
+}
+.content {
+  padding: 40px 10px 15px;
+  background-color: $color-white;
+  width: 900px;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 8%) !important;
+  > div {
+    &:nth-child(2) {
+      margin: 20px 0 10px 0;
+      border-top: thin $color-gray-4 solid;
+      width: 100%;
+      padding: 10px 0 0 0;
+    }
+  }
+}

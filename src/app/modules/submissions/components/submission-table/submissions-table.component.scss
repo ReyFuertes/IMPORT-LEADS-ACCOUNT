@@ -1,8 +1,9 @@
 @import "src/styleguide/shared";
-.users-information-container {
-  
+.submission-table-container {
+  padding-bottom: 150px;
 }
 .content {
+  min-height: 500px;
   padding: 20px;
   background-color: $color-white;
   width: 900px;
@@ -11,7 +12,16 @@
     margin: 20px 0 10px 0;
   }
 }
+.no-padding {
+  padding: 5px !important;
+}
+.pi-ellipsis-v {
+  cursor: pointer;
+}
 :host ::ng-deep {
+  .p-badge {
+    font-weight: 400;
+  }
   .mat-table {
     width: 100%;
   }

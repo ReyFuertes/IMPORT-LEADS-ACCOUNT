@@ -1,0 +1,55 @@
+@import "src/styleguide/shared";
+.users-information-container {
+  padding-bottom: 150px;
+}
+.content {
+  padding: 30px;
+  background-color: $color-white;
+  width: 1100px;
+  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 8%) !important;
+  > div:not(:first-child) {
+    margin: 30px 0 10px 0;
+  }
+}
+.add-user {
+  margin-top: 10px !important;
+}
+.pi-pencil, .pi-times {
+  cursor: pointer;
+  &:hover {
+    color: $color-blue;
+  }
+}
+:host ::ng-deep {
+  .mat-cell, .mat-footer-cell {
+    font-size: 13px;
+  }
+  .mat-header-row {
+    th {
+      &:first-child {
+        width: 250px;
+      }
+      &:nth-child(2) {
+        width: 150px;
+      }
+      &:nth-child(3) {
+        width: 150px;
+      }
+      &:nth-child(4) {
+        width: 250px;
+      }
+      &:nth-child(5) {
+        width: 150px;
+      }
+      &:nth-child(6) {
+        width: 150px;
+      }
+    }
+  }
+  .mat-table {
+    width: 100%;
+  }
+  tr.mat-row, tr.mat-footer-row {
+    height: 40px;
+  }
+}

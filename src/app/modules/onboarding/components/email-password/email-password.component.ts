@@ -24,7 +24,7 @@ export class EmailPasswordComponent implements OnInit {
   ngOnInit(): void { }
 
   public onNext(): void {
-    this.router.navigateByUrl('sign-up/company-information');
+    this.router.navigateByUrl('onboarding/company-information');
   }
 
   public onPrev(): void {

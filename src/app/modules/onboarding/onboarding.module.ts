@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { SignUpContainerComponent } from './container/sign-up-container.component';
 import { EmailPasswordComponent } from './components/email-password/email-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -15,13 +14,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CompanyInformationComponent } from './components/company-information/company-information.component';
 import { UsersInformationComponent } from './components/users-information/users-information.component';
 import {MatTableModule} from '@angular/material/table';
-import { SignUpReviewComponent } from './components/sign-up-review/sign-up-review.component';
+import { SubmittedComponent } from './components/submitted/submitted.component';
+import { OnboardingContainerComponent } from './container/onboarding-container.component';
+import { OnboardingReviewComponent } from './components/onboarding-review/onboarding-review.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from '../dialog/dialog.module';
 
 const primengModules = [
   InputTextModule,
   CardModule,
   ButtonModule,
   CheckboxModule,
+  TooltipModule
 ];
 
 const materialModules = [
@@ -33,7 +37,7 @@ const materialModules = [
 const routes: Routes = [
   {
     path: '',
-    component: SignUpContainerComponent,
+    component: OnboardingContainerComponent,
     children: [{
       path: '',
       component: EmailPasswordComponent
@@ -44,24 +48,29 @@ const routes: Routes = [
       path: 'users-information',
       component: UsersInformationComponent
     }, {
-      path: 'sign-up-review',
-      component: SignUpReviewComponent
+      path: 'onboarding-review',
+      component: OnboardingReviewComponent
+    }, {
+      path: 'submitted',
+      component: SubmittedComponent
     }]
   }
 ];
 @NgModule({
   declarations: [
-    SignUpContainerComponent,
+    OnboardingContainerComponent,
     EmailPasswordComponent,
     CompanyInformationComponent,
     UsersInformationComponent,
-    SignUpReviewComponent
+    OnboardingReviewComponent,
+    SubmittedComponent
   ],
   imports: [
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
     SharedModule,
+    DialogModule,
     ...primengModules,
     ...materialModules,
     RouterModule.forChild(routes),
@@ -70,4 +79,4 @@ const routes: Routes = [
   exports: [],
   providers: [],
 })
-export class SignUpModule { }
+export class OnboardingModule { }

@@ -3,7 +3,6 @@ import { GenericControl } from './../../generics/generic-control';
 import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControlName } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'il-dropdown-select',

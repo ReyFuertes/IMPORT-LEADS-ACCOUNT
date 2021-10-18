@@ -34,10 +34,10 @@ export class CompanyInformationComponent implements OnInit {
   ngOnInit(): void { }
 
   public onPrev(): void {
-    this.router.navigateByUrl('sign-up');
+    this.router.navigateByUrl('onboarding');
   }
 
   public onNext(): void {
-    this.router.navigateByUrl('sign-up/users-information');
+    this.router.navigateByUrl('onboarding/users-information');
   }
 }

@@ -45,7 +45,7 @@
   &.default {
     @include btn;
     color: $color-primary;
-    background-color: $color-gray-4;
+    background-color: $color-gray-3;
   }
   &.primary {
     @include btn;

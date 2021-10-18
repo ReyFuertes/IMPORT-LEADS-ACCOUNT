@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'sign-up', pathMatch: 'full' },
+  { path: '', redirectTo: 'onboarding', pathMatch: 'full' },
   {
-    path: 'sign-up',
-    loadChildren: () => import('./modules/sign-up/sign-up.module').then(m => m.SignUpModule),
+    path: 'onboarding',
+    loadChildren: () => import('./modules/onboarding/onboarding.module').then(m => m.OnboardingModule),
     canActivate: [],
-  },
+  }, {
+    path: 'submissions',
+    loadChildren: () => import('./modules/submissions/submissions.module').then(m => m.SubmissionModule),
+    canActivate: [],
+  }
 ];
 
 @NgModule({
