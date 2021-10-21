@@ -1,5 +1,8 @@
 
 @import "src/styleguide/shared";
+h1, h2, h3, h4, h5 {
+  color: $color-blue;
+}
 .company-information-container {
   width: 100%;
   height: 100%;
@@ -22,14 +25,13 @@ label {
   }
   .mat-card {
     height: auto;
-    min-width: 450px;
-    padding: 25px 30px 30px;
+    min-width: 470px;
+    padding: 33px 45px 35px;
     margin: 0 auto;
     > div {
       height: 100%;
     }
     h5 {
-      margin-bottom: 5px !important;
       margin-left: -5px;
     }
     button.il-button {

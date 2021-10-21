@@ -1,4 +1,10 @@
 @import "src/styleguide/shared";
+h1, h2, h3, h4 {
+  color: $color-blue;
+}
+h5 {
+  color: $color-blue-1;
+}
 .users-information-container {
   padding-bottom: 150px;
 }
@@ -24,6 +30,9 @@
   .mat-cell, .mat-footer-cell {
     font-size: 13px;
   }
+  tr.mat-header-row {
+    height: 35px;
+  }
   .mat-header-row {
     th {
       &:first-child {
@@ -48,6 +57,7 @@
   }
   .mat-table {
     width: 100%;
+    margin-top: 25px;
   }
   tr.mat-row, tr.mat-footer-row {
     height: 40px;

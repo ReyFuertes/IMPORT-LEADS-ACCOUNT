@@ -11,6 +11,12 @@ import { AppRoutingModule } from './app.routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './store/effects/app.effect';
+import { AccessService } from './services/api.service';
+import { HttpClientModule } from '@angular/common/http';
+import { reducers } from './store/root.reducer';
 
 const materialModules = [
   MatFormFieldModule,
@@ -25,6 +31,10 @@ const directives = [
   InputMaxLengthDirective,
 ];
 
+const services = [
+  AccessService
+];
+
 @NgModule({
   declarations: [
     AppComponent
@@ -33,13 +43,15 @@ const directives = [
     CommonModule,
     BrowserAnimationsModule,
     SharedModule,
+    HttpClientModule,
     FlexLayoutModule,
     ...materialModules,
     // ...primeNgModules,
     AppRoutingModule,
-    TranslateModule.forRoot({})
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([AppEffects]),
   ],
-  providers: [...directives],
+  providers: [...directives, ...services],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

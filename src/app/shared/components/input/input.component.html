@@ -1,7 +1,7 @@
 <div [formGroup]="form" class="il-input" [ngClass]="{'center': isCenter}">
   <mat-form-field [ngClass]="{'has-border': hasBorder, 'read-only': isReadOnly, 'errors': hasError}" [floatLabel]="floatLabel">
     
-    <input [ngClass]="{'errors': hasError}" [InputMaxLength]="inputMaxLen" matInput [formControlName]="controlName" [placeholder]="placeholder | translate" [type]="inputType" autocomplete="off" [readonly]="isReadOnly">
+    <input fxFlex [ngClass]="{'errors': hasError}" matInput [formControlName]="controlName" [placeholder]="placeholder" [type]="inputType" autocomplete="off" [readonly]="isReadOnly">
 
     <!-- <mat-error *ngIf="hasError" class="errors">{{ 'Invalid Field' | translate}}</mat-error> -->
   </mat-form-field>

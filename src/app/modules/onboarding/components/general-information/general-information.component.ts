@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/modules/service/storage.service';
+import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
 import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'il-company-information',
-  templateUrl: './company-information.component.html',
-  styleUrls: ['./company-information.component.scss']
+  selector: 'il-general-information',
+  templateUrl: './general-information.component.html',
+  styleUrls: ['./general-information.component.scss']
 })
-export class CompanyInformationComponent implements OnInit {
+export class GeneralInformationComponent extends GenericOnboardingComponent implements OnInit {
   public imgPath: string = environment.imgPath;
   public form: FormGroup;
   public languageOptions: ISimpleItem[] = [{
@@ -19,16 +21,8 @@ export class CompanyInformationComponent implements OnInit {
     label: 'Chinese',
     value: 'cn'
   }];
-  constructor(private router: Router, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      firstname: [null, Validators.required],
-      lastname: [null, Validators.required],
-      phoneNumber: [null, Validators.required],
-      address: [null, Validators.required],
-      companyName: [null, Validators.required],
-      companyAddress: [null, Validators.required],
-      language: [null, Validators.required]
-    });
+  constructor(storageService: StorageService, private router: Router, fb: FormBuilder) {
+    super(storageService, fb);
   }
 
   ngOnInit(): void { }

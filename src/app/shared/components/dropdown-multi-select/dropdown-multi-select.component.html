@@ -1,0 +1,10 @@
+<div fxLayout="column" fxLayoutAlign="start start">
+  <label>{{ 'Access' }}</label>
+  <p-multiSelect appendTo="body" [selectedItemsLabel]="'{0} selected'" [maxSelectedLabels]="maxSelectedLabels" [options]="options" [formControlName]="controlName" defaultLabel="Select Item">
+    <ng-template let-option pTemplate="item">
+      <div class="option-item">
+        <div>{{option?.label | titlecase}}</div>
+      </div>
+    </ng-template>
+  </p-multiSelect>
+</div>

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { InputComponent } from './components/input/input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +24,8 @@ import { customCurrencyPipe } from './pipes/custom-currency.pipe';
 import { SafePipe } from './pipes/html';
 import { DropdownSelectComponent } from './components/dropdown-select/dropdown-select.component';
 import { MatSelectModule } from '@angular/material/select';
+import { DropdownMultiSelectComponent } from './components/dropdown-multi-select/dropdown-multi-select.component';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const materialModules = [
   MatFormFieldModule,
@@ -45,11 +46,13 @@ const primeNgModules = [
   AutoCompleteModule,
   DropdownModule,
   InputSwitchModule,
+  MultiSelectModule
 ];
 
 const sharedComponents = [
   InputComponent,
-  DropdownSelectComponent
+  DropdownSelectComponent,
+  DropdownMultiSelectComponent
 ];
 
 const directives = [
@@ -71,9 +74,8 @@ const directives = [
     ReactiveFormsModule,
     ...materialModules,
     ...primeNgModules,
-    TranslateModule.forRoot({})
-   ],
+  ],
   exports: [...sharedComponents],
   providers: [customCurrencyPipe, SafePipe],
 })
-export class SharedModule {}
+export class SharedModule { }

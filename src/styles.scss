@@ -37,7 +37,7 @@ h4 {
   font-size: 18px;
 }
 h5 {
-  font-size: 14px;
+  font-size: 0.86rem;
   font-weight: 550;
 }
 .hidden {
@@ -73,4 +73,7 @@ img.close {
 img.logo {
   height: 50px;
   margin-bottom: 10px;
+}
+.m-b-5 {
+  margin-bottom: 5px !important;
 }

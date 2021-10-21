@@ -1,32 +1,48 @@
 @import "src/styleguide/shared";
+h1, h2, h3, h4 {
+  color: $color-blue;
+}
+h5 {
+  color: $color-blue-1;
+}
+.personal-details, .company-details, .language {
+  > div {
+    margin-bottom: 8px;
+    div {
+      font-size: 14px;
+      border: thin $color-gray-2 solid;
+      padding: 7px;
+      border-radius: 2px;
+    }
+  }
+}
+h5 {
+  margin-left: -5px;
+}
 .onboarding-review-container {
   background-color: transparent;
-  box-shadow: 0 4px 16px 0 rgb(0 0 0 / 8%) !important;
   padding-bottom: 10px;
 }
 .email-password {
   border-bottom: thin $color-gray-3 solid;
-  margin-bottom: 20px !important;
-  padding-bottom: 15px;
 }
 .row {
   font-size: 14px;
   padding: 5px;
 }
 label {
-  font-size: 12px;
-  color: $color-black-2;
-}
-h5 {
-  margin-left: -5px;
+  font-size: 0.73rem;
+  color: $color-black-3;
+  font-weight: 400;
 }
 .content {
   div {
     width: 100%;
+    margin-bottom: 5px;
   }
 }
 .btn-actions {
-  margin-top: 25px;
+  margin-top: 15px;
 }
 :host ::ng-deep {
   .mat-form-field-appearance-legacy .mat-form-field-wrapper {
@@ -37,6 +53,9 @@ h5 {
   }
   tr.mat-row, tr.mat-footer-row {
     height: 40px;
+  }
+  tr.mat-header-row {
+    height: 35px;
   }
   .mat-card {
     height: auto;

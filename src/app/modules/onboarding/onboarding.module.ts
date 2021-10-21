@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CompanyInformationComponent } from './components/company-information/company-information.component';
+import { GeneralInformationComponent } from './components/general-information/general-information.component';
 import { UsersInformationComponent } from './components/users-information/users-information.component';
 import {MatTableModule} from '@angular/material/table';
 import { SubmittedComponent } from './components/submitted/submitted.component';
@@ -43,7 +43,7 @@ const routes: Routes = [
       component: EmailPasswordComponent
     }, {
       path: 'company-information',
-      component: CompanyInformationComponent
+      component: GeneralInformationComponent
     }, {
       path: 'users-information',
       component: UsersInformationComponent
@@ -60,7 +60,7 @@ const routes: Routes = [
   declarations: [
     OnboardingContainerComponent,
     EmailPasswordComponent,
-    CompanyInformationComponent,
+    GeneralInformationComponent,
     UsersInformationComponent,
     OnboardingReviewComponent,
     SubmittedComponent

@@ -8,48 +8,48 @@
         <div fxLayout="row" fxLayoutAlign="center center"><h3>Review</h3></div>
         <div class="email-password">
           <h5>Login Information</h5>
-          <div class="row">Email: sampleemail@gmail.com</div>
+          <div class="row">Email: {{ getEmailPasswordForm.get('username').value }}</div>
           <div class="row">Password: *****</div>
         </div>
         <div>
           <h5>Personal Details</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <div class="personal-details" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
             <div fxFlex="47">
               <label>{{ 'Firstname' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="firstname" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('firstname')?.value }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Lastname' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="lastname" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('lastname')?.value }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Phone Number' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="phoneNumber" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('phoneNumber')?.value }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="address" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('address')?.value }}</div>
             </div>
           </div>
         </div>
         <div>
           <h5>Company Details</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <div class="company-details" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
             <div fxFlex="47">
               <label>{{ 'Company Name' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyName" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('companyName')?.value }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="companyAddress" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('companyAddress')?.value }}</div>
             </div>
           </div>
         </div>
         <div>
-          <h5>Language</h5>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+          <h5 class="m-b-5">Language</h5>
+          <div class="language" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxFlex="47">
-              <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="language" floatLabel="never"></il-input>
+              <div>{{ getGeneralInformationForm.get('language')?.value }}</div>
             </div>
           </div>
         </div>

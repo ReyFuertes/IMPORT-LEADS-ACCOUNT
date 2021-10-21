@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { AddUserDialogComponent } from 'src/app/modules/dialog/components/add-user-dialog/add-user-dialog.component';
-import { GenericDestroyPageComponent } from 'src/app/shared/generics/generic-destroy-page';
+import { StorageService } from 'src/app/modules/service/storage.service';
+import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
 import { environment } from 'src/environments/environment';
 
 const DUMMY_DATA: any[] = [
@@ -17,13 +19,13 @@ const DUMMY_DATA: any[] = [
   templateUrl: './users-information.component.html',
   styleUrls: ['./users-information.component.scss']
 })
-export class UsersInformationComponent extends GenericDestroyPageComponent implements OnInit {
+export class UsersInformationComponent extends GenericOnboardingComponent implements OnInit {
   public imgPath: string = environment.imgPath;
   public columnsToDisplay = ['username', 'position', 'role', 'company_name', 'phone', 'access', 'actions'];
   public dataSource = DUMMY_DATA;
 
-  constructor(private dialog: MatDialog, private router: Router) {
-    super();
+  constructor(storageService: StorageService, fb: FormBuilder, private dialog: MatDialog, private router: Router) {
+    super(storageService, fb);
   }
 
   ngOnInit(): void { }
