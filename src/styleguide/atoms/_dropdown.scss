@@ -1,15 +1,14 @@
 
 .p-multiselect-panel {
-  .p-multiselect-items .p-multiselect-item {
-    font-size: 0.8rem;
+  .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
+    padding-right: 1.5rem;
+    max-height: 35px;
   }
 }
-.p-multiselect {
-  height: 35px !important;
-}
 .p-multiselect-label {
-  height: 33px !important;
   display: flex !important;
   align-items: center;
   align-content: center;
+  position: relative;
+  top: -1px;
 }

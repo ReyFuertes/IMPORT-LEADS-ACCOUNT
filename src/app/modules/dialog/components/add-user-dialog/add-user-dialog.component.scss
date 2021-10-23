@@ -40,8 +40,8 @@ label {
   padding-top: 20px;
 }
 :host ::ng-deep {
-  .p-multiselect {
-    width: 180px;
+  .p-multiselect, .p-inputtext {
+    width: 199px;
   }
   .mat-form-field-appearance-legacy .mat-form-field-wrapper {
     padding-bottom: 0;

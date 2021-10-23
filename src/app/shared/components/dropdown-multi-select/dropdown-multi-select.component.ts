@@ -12,53 +12,15 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dropdown-multi-select.component.scss']
 })
 export class DropdownMultiSelectComponent extends GenericControl<ISimpleItem> implements OnInit, OnChanges {
-  @Input() public form: FormGroup;
-  @Input() public placeHolder: string = '';
   @Input() public searchItem: boolean = false;
-  @Input() public options: ISimpleItem[];
-  @Input() public controlName: any;
-  @Input() public hasBorder: boolean = false;
   @Input() public maxSelectedLabels: number = 2;
   @Output() public valueEmitter = new EventEmitter<any>();
-
-  public dataFilterForm = new FormControl();
-  public $filteredData = new ReplaySubject<any>();
-
-  private newDataList: any;
 
   constructor(public translateService: TranslateService) {
     super();
   }
 
-  ngOnInit() {
-    /* when edit mode pass id to display selected item */
-    const id: string = this.form.get(this.controlName).value &&
-      this.form.get(this.controlName).value.id || null;
-    if (id) this.form.get(this.controlName).patchValue(id);
-
-    this.newDataList = this.options && this.options.slice();
-    if (this.newDataList) {
-      this.$filteredData.next(this.newDataList);
-      this.dataFilterForm.valueChanges
-        .subscribe(() => {
-          this.filterdata();
-        });
-    };
-  }
-
-  private filterdata(): void {
-    let search: string = this.dataFilterForm.value;
-    if (!search) {
-      this.$filteredData.next(this.newDataList);
-      return;
-    } else {
-      search = search.toLowerCase();
-    }
-
-    this.$filteredData.next(
-      this.newDataList.filter(data => data.label.toLowerCase().indexOf(search) > -1)
-    );
-  }
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.form && changes.form.currentValue) {

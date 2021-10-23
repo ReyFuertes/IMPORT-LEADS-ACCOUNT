@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { StorageService } from 'src/app/modules/service/storage.service';
 import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
+import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 import { environment } from 'src/environments/environment';
 
 const DUMMY_DATA: any[] = [
@@ -21,12 +22,24 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   public form: FormGroup;
   public columnsToDisplay = ['id', 'username', 'position', 'role', 'company_name', 'phone', 'access'];
   public dataSource = DUMMY_DATA;
+  public languageOptions: ISimpleItem[] = [{
+    label: 'English',
+    value: 'en'
+  }, {
+    label: 'Chinese',
+    value: 'cn'
+  }];
 
   constructor(storageService: StorageService, private router: Router, fb: FormBuilder) {
     super(storageService, fb);
   }
 
   ngOnInit(): void {
+    console.log(this.getGeneralInformationForm.value)
+  }
+
+  public get getSelectedLanguage(): string {
+    return this.languageOptions.find(lang => lang.value === this.getGeneralInformationForm.get('language')?.value)?.label;
   }
 
   public onNext(): void {

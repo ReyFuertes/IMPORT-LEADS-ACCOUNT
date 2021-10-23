@@ -6,11 +6,11 @@ import { environment } from 'src/environments/environment';
 @Directive()
 export class GenericControl<T> extends GenericDestroyPageComponent {
   @Input() public placeholder: string;
+  @Input() public label: string;
   @Input() public options: Array<T>;
   @Input() public item: T;
   @Input() public controlName: any;
   @Input() public form: FormGroup;
-  @Input() public floatLabel: 'always' | 'never' | 'auto';
   @Input() public selectedItem: T;
 
   public svgPath: string = environment.svgPath;

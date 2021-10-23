@@ -1,0 +1,9 @@
+.badge {
+  &.default {
+    padding: 0.2rem 0.3rem;
+    background-color: $color-gray-3;
+    border-radius: 20px;
+    margin-bottom: 5px;
+    width: fit-content;
+  }
+}

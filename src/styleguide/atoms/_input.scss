@@ -5,27 +5,7 @@
       cursor: not-allowed;
     }
   }
-  input.mat-input-element {
-    line-height: 20px;
-    padding: 0 8px;
-  }
-  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
-    color: $color-black-2;
-  }
-  ::ng-deep {
-    .read-only .mat-form-field-appearance-legacy .mat-form-field-underline {
-      opacity: 0.6 !important;
-    }
-  }
-  ::ng-deep {
-    input.mat-input-element {
-      font-size: 14px;
-      position: relative;
-      top: 1px;
-    }
-    .mat-form-field-appearance-legacy .mat-form-field-label {
-      font-size: 14px;
-      color: $color-black-2;
-    }
+  .p-inputtext {
+    width: 100%;
   }
 }

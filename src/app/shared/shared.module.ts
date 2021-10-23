@@ -26,6 +26,9 @@ import { DropdownSelectComponent } from './components/dropdown-select/dropdown-s
 import { MatSelectModule } from '@angular/material/select';
 import { DropdownMultiSelectComponent } from './components/dropdown-multi-select/dropdown-multi-select.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputPasswordComponent } from './components/input-password/input-password.component';
+import { PasswordModule } from 'primeng/password';
 
 const materialModules = [
   MatFormFieldModule,
@@ -46,13 +49,16 @@ const primeNgModules = [
   AutoCompleteModule,
   DropdownModule,
   InputSwitchModule,
-  MultiSelectModule
+  MultiSelectModule,
+  InputTextModule,
+  PasswordModule
 ];
 
 const sharedComponents = [
   InputComponent,
   DropdownSelectComponent,
-  DropdownMultiSelectComponent
+  DropdownMultiSelectComponent,
+  InputPasswordComponent
 ];
 
 const directives = [

@@ -3,50 +3,52 @@
     <img class="logo" [src]="imgPath + 'logo.png'" />
   </div>
   <mat-card>
-    <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="15px">
-      <div fxLayout="row" fxLayoutAlign="center center"><h3>General Information</h3></div>
-      <div>
-        <h5>Personal</h5>
-        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <h3>General Information</h3>
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Firstname' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="firstname" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Firstname" controlName="firstname" floatLabel="never"></il-input>
           </div>
           <div>
             <label>{{ 'Lastname' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="lastname" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Lastname" controlName="lastname" floatLabel="never"></il-input>
           </div>
         </div>
-        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
+      </div>
+
+      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Phone Number' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="phoneNumber" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Phone Number" controlName="phoneNumber" floatLabel="never"></il-input>
           </div>
           <div>
             <label>{{ 'Address' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="address" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Address" controlName="address" floatLabel="never"></il-input>
           </div>
         </div>
       </div>
-      <div>
-        <h5>Company</h5>
-        <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Company Name' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="companyName" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Company Name" controlName="companyName" floatLabel="never"></il-input>
           </div>
           <div>
             <label>{{ 'Address' }}</label>
-            <il-input [form]="getGeneralInformationForm" [hasBorder]="true" isFloatLabel="never" controlName="companyAddress" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Company Address" controlName="companyAddress" floatLabel="never"></il-input>
           </div>
         </div>
-
       </div>
+
       <div fxLayout="column" fxLayoutAlign="start start">
-        <h5 class="m-b-5">Language</h5>
-        <div>
-          <il-dropdown-select [hasBorder]="true" [form]="getGeneralInformationForm" [options]="languageOptions" controlName="language"></il-dropdown-select>
-        </div>
+        <il-dropdown-select label="Language" [form]="getGeneralInformationForm" controlName="language" [options]="languageOptions"></il-dropdown-select>
       </div>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
         <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="5px">

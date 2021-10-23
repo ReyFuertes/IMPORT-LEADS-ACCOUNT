@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { IRole } from 'src/app/models/generic.model';
+import { IUser } from 'src/app/models/user.model';
 import { AddUserDialogComponent } from 'src/app/modules/dialog/components/add-user-dialog/add-user-dialog.component';
 import { StorageService } from 'src/app/modules/service/storage.service';
 import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
+import { RootState } from 'src/app/store/root.reducer';
 import { environment } from 'src/environments/environment';
+import { getUserAccessSelector, getUserRolesSelector } from 'src/app/store/selectors/app.selector';
+import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 
-const DUMMY_DATA: any[] = [
-  { username: 'testclient@testing.com', position: '', role: 'Admin', company_name: 'Test Company 1', phone: '0612345678', access: '' },
-  { username: 'angela@chinaimportleads.com', position: '', role: 'Client', company_name: 'Test Company 2', phone: '0612345678', access: '' },
-  { username: 'jamesmoore@gmail.com', position: '', role: 'Master', company_name: 'Test Company 3', phone: '0612345678', access: '' }
-];
 
 @Component({
   selector: 'il-users-information',
@@ -21,36 +23,62 @@ const DUMMY_DATA: any[] = [
 })
 export class UsersInformationComponent extends GenericOnboardingComponent implements OnInit {
   public imgPath: string = environment.imgPath;
-  public columnsToDisplay = ['username', 'position', 'role', 'company_name', 'phone', 'access', 'actions'];
-  public dataSource = DUMMY_DATA;
+  public columnsToDisplay = ['username', 'role', 'access', 'actions'];
+  public roles: ISimpleItem[];
 
-  constructor(storageService: StorageService, fb: FormBuilder, private dialog: MatDialog, private router: Router) {
+  constructor(private _storageService: StorageService, private store: Store<RootState>, storageService: StorageService, fb: FormBuilder, private dialog: MatDialog, private router: Router) {
     super(storageService, fb);
+    this.store.pipe(select(getUserRolesSelector)).subscribe(values => this._storageService.set('r_l_s', JSON.stringify(values)));
+    this.store.pipe(select(getUserAccessSelector)).subscribe(values => this._storageService.set('_cc_s', JSON.stringify(values)));
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (this.getUserFormValues) {
+      this.dataSource = this.getStorageValues?.users;
+    }
+  }
+
+  public getValue(values: string[], index: string): any {
+    const value = this._storageService.get(index);
+    if (!value) return [];
+
+    let arr = JSON.parse(this._storageService.get(index)) || [];
+
+    const results = arr?.filter(o => values.includes(o?.value));
+    return results;
+  }
+
+  public splitToArray(str: string): any[] {
+    return str.split(',');
+  }
 
   public onAddUser(): void {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
-      width: '675px',
-      height: '375px',
-      data: {
-        action: 0
+      width: '550px',
+      height: '385px',
+      data: { action: 0 }
+    });
+    dialogRef.afterClosed().subscribe((result: IUser) => {
+      if (result) {
+        const user: IUser = {
+          firstname: result?.firstname,
+          lastname: result?.lastname,
+          username: result?.username,
+          password: result?.password,
+          access: result?.access,
+          roles: result?.roles
+        }
+        this.addUser(user);
+        this.dataSource = this.formUsersArray.value;
       }
     });
-    dialogRef.afterClosed().pipe(takeUntil(this.$unsubscribe))
-      .subscribe(result => {
-
-      });
   }
 
-  public onEditUser(element: any): void {
+  public onEditUser(selectedItem: any): void {
     const dialogRef = this.dialog.open(AddUserDialogComponent, {
-      width: '675px',
-      height: '375px',
-      data: {
-        action: 1
-      }
+      width: '550px',
+      height: '385px',
+      data: { action: 1, selectedItem }
     });
     dialogRef.afterClosed().pipe(takeUntil(this.$unsubscribe))
       .subscribe(result => {
@@ -58,7 +86,9 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
       });
   }
 
-  public onDeleteUser(element: any): void { }
+  public onDeleteUser(selectedItem: any): void {
+    this.removeUser(selectedItem);
+  }
 
   public onPrev(): void {
     this.router.navigateByUrl('onboarding/company-information');

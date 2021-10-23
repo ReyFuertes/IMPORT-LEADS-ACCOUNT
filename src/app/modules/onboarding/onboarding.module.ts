@@ -19,6 +19,7 @@ import { OnboardingContainerComponent } from './container/onboarding-container.c
 import { OnboardingReviewComponent } from './components/onboarding-review/onboarding-review.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from '../dialog/dialog.module';
+import { CommonModule } from '@angular/common';
 
 const primengModules = [
   InputTextModule,
@@ -66,6 +67,7 @@ const routes: Routes = [
     SubmittedComponent
   ],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,

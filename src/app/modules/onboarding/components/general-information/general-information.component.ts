@@ -12,8 +12,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./general-information.component.scss']
 })
 export class GeneralInformationComponent extends GenericOnboardingComponent implements OnInit {
-  public imgPath: string = environment.imgPath;
-  public form: FormGroup;
   public languageOptions: ISimpleItem[] = [{
     label: 'English',
     value: 'en'

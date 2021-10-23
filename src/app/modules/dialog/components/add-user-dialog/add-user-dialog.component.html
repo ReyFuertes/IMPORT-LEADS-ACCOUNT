@@ -7,42 +7,33 @@
       <div fxFlex="20px"><i pTooltip="Close" tooltipPosition="top" (click)="dialogRef.close(false)" class="pi pi-times"></i></div>
     </div>
   </div>
-  <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <div class="content" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
     <div fxLayoutGap="20px">
       <div>
         <label>{{ 'Firstname' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="firstname" floatLabel="never"></il-input>
+        <il-input [form]="form" placeholder="Firstname" controlName="firstname"></il-input>
       </div>
       <div>
         <label>{{ 'Lastname' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="lastname" floatLabel="never"></il-input>
-      </div>
-      <div>
-        <label>{{ 'Company' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="company" floatLabel="never"></il-input>
+        <il-input [form]="form" placeholder="Lastname" controlName="lastname"></il-input>
       </div>
     </div>
     <div fxLayoutGap="20px">
       <div>
-        <label>{{ 'Phone Number' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="phoneNumber" floatLabel="never"></il-input>
-      </div>
-      <div>
         <label>{{ 'Username' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="username" floatLabel="never"></il-input>
+        <il-input [form]="form" placeholder="Username" controlName="username"></il-input>
       </div>
       <div>
         <label>{{ 'Password' }}</label>
-        <il-input [form]="form" [hasBorder]="true" isFloatLabel="never" controlName="password" floatLabel="never"></il-input>
+        <il-input-password [form]="form" placeholder="Password" controlName="password"></il-input-password>
       </div>
     </div>
     <div fxLayoutGap="20px">
       <div fxFlex fxLayoutAlign="end end">
-        <il-dropdown-multi-select label="Access" [form]="form" [options]="accessOptions" controlName="access" [options]="$access | async"></il-dropdown-multi-select>
+        <il-dropdown-multi-select label="Access" placeholder="Select Access" [form]="form" controlName="access" [options]="($access | async)"></il-dropdown-multi-select>
       </div>
-      <div>
-        <label>{{ 'Role' }}</label>
-        <il-dropdown-select [hasBorder]="true" [form]="form" [options]="roleOptions" controlName="role"></il-dropdown-select>
+      <div fxFlex fxLayoutAlign="end end">
+        <il-dropdown-multi-select label="Role" placeholder="Select Role" [form]="form" controlName="roles" [options]="$roles | async"></il-dropdown-multi-select>
       </div>
     </div>
   </div>
