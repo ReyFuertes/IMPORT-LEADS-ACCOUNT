@@ -1,0 +1,9 @@
+@import "src/styleguide/shared";
+div {
+  height: 400px;
+}
+.pi-home {
+  font-size: 2rem;
+  color: $color-black-2;
+  cursor: pointer;
+}

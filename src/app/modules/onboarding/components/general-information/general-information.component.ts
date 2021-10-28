@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/modules/service/storage.service';
 import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
 import { ISimpleItem } from 'src/app/shared/generics/generic.model';
@@ -19,17 +19,17 @@ export class GeneralInformationComponent extends GenericOnboardingComponent impl
     label: 'Chinese',
     value: 'cn'
   }];
-  constructor(storageService: StorageService, private router: Router, fb: FormBuilder) {
-    super(storageService, fb);
+  constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder) {
+    super(router, route, storageService, fb);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   public onPrev(): void {
-    this.router.navigateByUrl('onboarding');
+    this.router.navigateByUrl(`onboarding/${this.id}`);
   }
 
   public onNext(): void {
-    this.router.navigateByUrl('onboarding/users-information');
+    super.onNext(`onboarding/users-information/${this.id}`);
   }
 }

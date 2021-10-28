@@ -29,6 +29,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputPasswordComponent } from './components/input-password/input-password.component';
 import { PasswordModule } from 'primeng/password';
+import { InputEmailComponent } from './components/input-email/input-email.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const materialModules = [
   MatFormFieldModule,
@@ -58,7 +60,9 @@ const sharedComponents = [
   InputComponent,
   DropdownSelectComponent,
   DropdownMultiSelectComponent,
-  InputPasswordComponent
+  InputPasswordComponent,
+  InputEmailComponent,
+  PageNotFoundComponent
 ];
 
 const directives = [

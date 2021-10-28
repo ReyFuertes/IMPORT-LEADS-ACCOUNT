@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { IRole } from 'src/app/models/generic.model';
 import { IAccess, IUser } from 'src/app/models/user.model';
 import { ISimpleItem } from 'src/app/shared/generics/generic.model';
+import { emailRegex } from 'src/app/shared/util/email';
 import { RootState } from 'src/app/store/root.reducer';
 import { getUserAccessSelector, getUserRolesSelector } from 'src/app/store/selectors/app.selector';
 import { environment } from 'src/environments/environment';
@@ -28,7 +29,7 @@ export class AddUserDialogComponent implements OnInit {
     this.form = this.fb.group({
       firstname: [null, Validators.required],
       lastname: [null, Validators.required],
-      username: [null, Validators.required],
+      username: [null, Validators.compose([Validators.required, Validators.pattern(emailRegex.email)])],
       password: [null, Validators.required],
       access: [null, Validators.required],
       roles: [null, Validators.required],
@@ -45,6 +46,12 @@ export class AddUserDialogComponent implements OnInit {
   }
 
   public onAdd(): void {
+    if (this.form.valid) {
+      this.dialogRef.close(<IUser>this.form.value);
+    }
+  }
+
+  public onUpdate(): void {
     if (this.form.valid) {
       this.dialogRef.close(<IUser>this.form.value);
     }

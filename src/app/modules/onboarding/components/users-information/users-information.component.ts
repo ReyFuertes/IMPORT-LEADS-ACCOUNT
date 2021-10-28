@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -23,33 +23,19 @@ import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 })
 export class UsersInformationComponent extends GenericOnboardingComponent implements OnInit {
   public imgPath: string = environment.imgPath;
-  public columnsToDisplay = ['username', 'role', 'access', 'actions'];
+  public columnsToDisplay = ['username', 'firstname', 'lastname', 'role', 'access', 'actions'];
   public roles: ISimpleItem[];
 
-  constructor(private _storageService: StorageService, private store: Store<RootState>, storageService: StorageService, fb: FormBuilder, private dialog: MatDialog, private router: Router) {
-    super(storageService, fb);
+  constructor(router: Router, route: ActivatedRoute, private _storageService: StorageService, private store: Store<RootState>, storageService: StorageService, fb: FormBuilder, private dialog: MatDialog) {
+    super(router, route, storageService, fb);
     this.store.pipe(select(getUserRolesSelector)).subscribe(values => this._storageService.set('r_l_s', JSON.stringify(values)));
     this.store.pipe(select(getUserAccessSelector)).subscribe(values => this._storageService.set('_cc_s', JSON.stringify(values)));
+    this.formUsersArray = this.form.get('users') as FormArray;
   }
 
   ngOnInit(): void {
-    if (this.getUserFormValues) {
-      this.dataSource = this.getStorageValues?.users;
-    }
-  }
-
-  public getValue(values: string[], index: string): any {
-    const value = this._storageService.get(index);
-    if (!value) return [];
-
-    let arr = JSON.parse(this._storageService.get(index)) || [];
-
-    const results = arr?.filter(o => values.includes(o?.value));
-    return results;
-  }
-
-  public splitToArray(str: string): any[] {
-    return str.split(',');
+    this.dataSource = this.getStorageValues?.users;
+    this.formUsersArray.patchValue(this.getStorageValues?.users);
   }
 
   public onAddUser(): void {
@@ -70,6 +56,8 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
         }
         this.addUser(user);
         this.dataSource = this.formUsersArray.value;
+        
+        this.setStorageValue('onboarding');
       }
     });
   }
@@ -82,7 +70,20 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
     });
     dialogRef.afterClosed().pipe(takeUntil(this.$unsubscribe))
       .subscribe(result => {
-
+        if (result) {
+          const user: IUser = {
+            firstname: result?.firstname,
+            lastname: result?.lastname,
+            username: result?.username,
+            password: result?.password,
+            access: result?.access,
+            roles: result?.roles
+          }
+          this.onDeleteUser(user);
+          this.addUser(user);
+          this.dataSource = this.formUsersArray.value;
+          this.setStorageValue('onboarding');
+        }
       });
   }
 
@@ -91,10 +92,10 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
   }
 
   public onPrev(): void {
-    this.router.navigateByUrl('onboarding/company-information');
+    this.router.navigateByUrl(`onboarding/company-information/${this.id}`);
   }
 
   public onNext(): void {
-    this.router.navigateByUrl('onboarding/onboarding-review');
+    super.onNext(`onboarding/review/${this.id}`);
   }
 }

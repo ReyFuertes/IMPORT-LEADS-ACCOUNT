@@ -50,11 +50,11 @@
       <div fxLayout="column" fxLayoutAlign="start start">
         <il-dropdown-select label="Language" [form]="getGeneralInformationForm" controlName="language" [options]="languageOptions"></il-dropdown-select>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="15px">
         <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="5px">
           {{ 'PREVIOUS' }}
         </button>
-        <button (click)="onNext()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
+        <button [disabled]="!getGeneralInformationForm.valid" (click)="onNext()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
           {{ 'NEXT' }}
         </button>
       </div>

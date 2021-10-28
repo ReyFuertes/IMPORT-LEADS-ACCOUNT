@@ -21,7 +21,7 @@
     <div fxLayoutGap="20px">
       <div>
         <label>{{ 'Username' }}</label>
-        <il-input [form]="form" placeholder="Username" controlName="username"></il-input>
+        <il-input-email [form]="form" placeholder="Username" controlName="username"></il-input-email>
       </div>
       <div>
         <label>{{ 'Password' }}</label>
@@ -41,7 +41,7 @@
     <button (click)="dialogRef.close(false)" mat-flat-button class="il-button default large" fxLayoutGap="5px">
       {{ 'Cancel' }}
     </button>
-    <button (click)="onAdd()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
+    <button [disabled]="!form.valid" (click)="onAdd()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
       {{ actionText[data?.action] }}
     </button>
   </div>

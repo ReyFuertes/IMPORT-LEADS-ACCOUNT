@@ -1,6 +1,6 @@
 import { Component, OnInit, Self, SkipSelf } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/modules/service/storage.service';
 import { GenericOnboardingComponent } from 'src/app/shared/generics/generic-onboarding';
 import { environment } from 'src/environments/environment';
@@ -16,16 +16,13 @@ export class EmailPasswordComponent extends GenericOnboardingComponent implement
   public form: FormGroup;
   public loginError: boolean = false;
 
-  constructor(storageService: StorageService, fb: FormBuilder, private router: Router) {
-    super(storageService, fb);
+  constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder) {
+    super(router, route, storageService, fb);
   }
 
   ngOnInit(): void { }
 
   public onNext(): void {
-    this.router.navigateByUrl('onboarding/company-information');
-  }
-
-  public onPrev(): void {
+    super.onNext(`onboarding/company-information/${this.id}`);
   }
 }
