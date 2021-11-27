@@ -9,7 +9,7 @@ import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 import { RootState } from 'src/app/store/root.reducer';
 import { environment } from 'src/environments/environment';
 import { OnboardingService } from '../../onboarding.service';
-import { createOnboardingAction } from '../../store/onboarding.actions';
+import { createCustomerAction } from '../../store/onboarding.actions';
 
 @Component({
   selector: 'il-review',
@@ -44,7 +44,7 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   public onSubmit(): void {
     setTimeout(() => {
       if (this.getEmailPasswordForm.valid && this.getGeneralInformationForm.valid) {
-        this.store.dispatch(createOnboardingAction({
+        this.store.dispatch(createCustomerAction({
           payload: {
             email_password: this.getEmailPasswordFormValues,
             general_information: this.getGeneralInformationFormValues,

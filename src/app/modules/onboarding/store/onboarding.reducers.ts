@@ -1,5 +1,5 @@
 import { createReducer, on, Action } from "@ngrx/store";
-import { createOnboardingSuccessAction } from "./onboarding.actions";
+import { createCustomerSuccessAction } from "./onboarding.actions";
 
 export interface OnboardingState {
   responseStatus?: any
@@ -11,7 +11,7 @@ export const initialState: OnboardingState = {
 
 const onboardingReducer = createReducer(
   initialState,
-  on(createOnboardingSuccessAction, (state, action) => {
+  on(createCustomerSuccessAction, (state, action) => {
     return Object.assign({}, state, { responseStatus: action.response });
   }),
 );

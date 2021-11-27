@@ -2,16 +2,16 @@ import { createAction, props } from '@ngrx/store';
 import { IOnboarding } from 'src/app/models/onboarding.model';
 
 export enum OnboardingActionTypes {
-  createOnboardingAction = '[Onboarding] create',
-  createOnboardingSuccessAction = '[Onboarding] create (success)',
+  createCustomerAction = '[Onboarding] create',
+  createCustomerSuccessAction = '[Onboarding] create (success)',
   createOnboardingFailedAction = '[Onboarding] create (failed)'
 }
-export const createOnboardingAction = createAction(
-  OnboardingActionTypes.createOnboardingAction,
+export const createCustomerAction = createAction(
+  OnboardingActionTypes.createCustomerAction,
   props<{ payload: IOnboarding }>()
 );
-export const createOnboardingSuccessAction = createAction(
-  OnboardingActionTypes.createOnboardingSuccessAction,
+export const createCustomerSuccessAction = createAction(
+  OnboardingActionTypes.createCustomerSuccessAction,
   props<{ response: any }>()
 );
 export const createOnboardingFailedAction = createAction(

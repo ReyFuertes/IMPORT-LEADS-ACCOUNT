@@ -6,6 +6,6 @@ import { StorageService } from '../service/storage.service';
 @Injectable({ providedIn: 'root' })
 export class OnboardingService extends BaseService<any> {
   constructor(http: HttpClient, storageSrv: StorageService) {
-    super(http, 'onboarding', storageSrv);
+    super(http, 'customer', storageSrv);
   }
 }
