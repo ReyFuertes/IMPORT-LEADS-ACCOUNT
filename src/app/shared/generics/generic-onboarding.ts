@@ -6,6 +6,9 @@ import { StorageService } from 'src/app/modules/service/storage.service';
 import { environment } from 'src/environments/environment';
 import { GenericDestroyPageComponent } from './generic-destroy-page';
 import { v4 as uuid } from 'uuid';
+import { Store } from '@ngrx/store';
+import { RootState } from 'src/app/store/root.reducer';
+import { isUserInvitedAction } from 'src/app/modules/onboarding/store/onboarding.actions';
 @Directive()
 export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public imgPath: string = environment.imgPath;
@@ -14,29 +17,26 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public dataSource: any;
   public id: string;
 
-  constructor(public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
+  constructor(public store: Store<RootState>, public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
     super();
     this.id = this.route.snapshot.paramMap.get('id');
-
-    //temporary for routing purpose
-    if (!this.id) {
-      this.id = uuid();
-    }
-
-    //note: check if the id is valid issue
+    if (this.id) {
+      this.store.dispatch(isUserInvitedAction({ id: this.id }));
+    };
 
     this.form = this.fb.group({
       emailPassword: this.fb.group({
-        username: ['', Validators.compose([Validators.required])],
-        password: ['', Validators.required]
+        id: [null, Validators.required],
+        username: [null, Validators.compose([Validators.required])],
+        password: [null, Validators.required]
       }),
       generalInformation: this.fb.group({
-        firstname: ['', Validators.required],
-        lastname: ['', Validators.required],
-        phoneNumber: ['', Validators.required],
-        address: ['', Validators.required],
-        companyName: ['', Validators.required],
-        companyAddress: ['', Validators.required],
+        firstname: [null, Validators.required],
+        lastname: [null, Validators.required],
+        phoneNumber: [null, Validators.required],
+        address: [null, Validators.required],
+        companyName: [null, Validators.required],
+        companyAddress: [null, Validators.required],
         language: ['en', Validators.required]
       }),
       users: new FormArray([]),

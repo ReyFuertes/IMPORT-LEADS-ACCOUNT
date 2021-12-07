@@ -29,8 +29,8 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
     value: 'cn'
   }];
 
-  constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder, private store: Store<RootState>) {
-    super(router, route, storageService, fb);
+  constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder, store: Store<RootState>) {
+    super(store, router, route, storageService, fb);
   }
 
   ngOnInit(): void {

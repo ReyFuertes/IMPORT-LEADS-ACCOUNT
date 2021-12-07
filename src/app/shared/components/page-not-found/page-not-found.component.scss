@@ -1,6 +1,13 @@
 @import "src/styleguide/shared";
-div {
-  height: 400px;
+.page-not-found-container {
+  padding-bottom: 150px;
+}
+.mat-card {
+  min-height: 300px;
+  width: 400px;
+  div {
+    height: 100%;
+  }
 }
 .pi-home {
   font-size: 2rem;

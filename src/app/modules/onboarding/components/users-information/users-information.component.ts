@@ -26,8 +26,8 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
   public columnsToDisplay = ['username', 'firstname', 'lastname', 'role', 'access', 'actions'];
   public roles: ISimpleItem[];
 
-  constructor(router: Router, route: ActivatedRoute, private _storageService: StorageService, private store: Store<RootState>, storageService: StorageService, fb: FormBuilder, private dialog: MatDialog) {
-    super(router, route, storageService, fb);
+  constructor(router: Router, route: ActivatedRoute, private _storageService: StorageService, store: Store<RootState>, storageService: StorageService, fb: FormBuilder, private dialog: MatDialog) {
+    super(store, router, route, storageService, fb);
     this.store.pipe(select(getUserRolesSelector)).subscribe(values => this._storageService.set('r_l_s', JSON.stringify(values)));
     this.store.pipe(select(getUserAccessSelector)).subscribe(values => this._storageService.set('_cc_s', JSON.stringify(values)));
     this.formUsersArray = this.form.get('users') as FormArray;

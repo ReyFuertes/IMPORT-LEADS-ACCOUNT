@@ -1,6 +1,7 @@
 import { IRole } from "./generic.model";
 
 export interface IUser {
+  id?: string;
   access: IAccess[];
   firstname?: string;
   lastname?: string;

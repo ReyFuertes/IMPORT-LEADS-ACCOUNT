@@ -15,6 +15,6 @@ export class AccessService extends BaseService<IAccess> {
 @Injectable({ providedIn: 'root' })
 export class RolesService extends BaseService<IRole> {
   constructor(http: HttpClient, storageSrv: StorageService) {
-    super(http, 'roles', storageSrv);
+    super(http, 'role', storageSrv);
   }
 }
