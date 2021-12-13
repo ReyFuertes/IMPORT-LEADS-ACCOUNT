@@ -15,13 +15,13 @@ export interface IUserInformation {
 export interface IGeneralInformation {
   firstname: string;
   lastname: string;
-  phoneNumber: string;
+  phone_number: string;
   address: string;
-  companyName: string;
-  companyAddress: string;
+  company_name: string;
+  company_address: string;
   language: string;
 }
 export interface IEmailPassword {
   username: string;
-  password: string
+  password: string;
 }

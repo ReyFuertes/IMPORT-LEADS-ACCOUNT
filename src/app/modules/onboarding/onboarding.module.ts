@@ -24,6 +24,8 @@ import { PageNotFoundComponent } from 'src/app/shared/components/page-not-found/
 import { OnboardingService } from './onboarding.service';
 import { EffectsModule } from '@ngrx/effects';
 import { OnboardingEffects } from './store/onboarding.effects';
+import { AuthGuard } from 'src/app/services/auth.guard';
+import { SubscriptionsEffect } from 'src/app/store/effects/subscription.effects';
 
 const primengModules = [
   InputTextModule,
@@ -47,7 +49,7 @@ const routes: Routes = [{
     component: SubmittedComponent
   }, {
     path: ':id',
-    component: EmailPasswordComponent
+    component: EmailPasswordComponent,
   }, {
     path: 'company-information/:id',
     component: GeneralInformationComponent
@@ -60,7 +62,7 @@ const routes: Routes = [{
   }, {
     path: '**', pathMatch: 'full',
     component: PageNotFoundComponent
-  },]
+  }],
 }];
 @NgModule({
   declarations: [

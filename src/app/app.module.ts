@@ -14,9 +14,11 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effect';
-import { AccessService } from './services/api.service';
+import { AccessService, SubscriptionService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { reducers } from './store/root.reducer';
+import { AuthGuard } from './services/auth.guard';
+import { SubscriptionsEffect } from './store/effects/subscription.effects';
 
 const materialModules = [
   MatFormFieldModule,
@@ -32,7 +34,8 @@ const directives = [
 ];
 
 const services = [
-  AccessService
+  AccessService,
+  SubscriptionService
 ];
 
 @NgModule({
@@ -49,9 +52,9 @@ const services = [
     // ...primeNgModules,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, SubscriptionsEffect]),
   ],
-  providers: [...directives, ...services],
+  providers: [AuthGuard, ...directives, ...services],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

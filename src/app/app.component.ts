@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { loadAllRolesAction, loadUserAccessAction } from './store/actions/app.action';
+import { getSubscriptionsAction } from './store/actions/subscription.action';
 import { RootState } from './store/root.reducer';
 
 @Component({
@@ -20,8 +21,9 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<RootState>) {
     this.store.dispatch(loadUserAccessAction());
     this.store.dispatch(loadAllRolesAction());
+    this.store.dispatch(getSubscriptionsAction());
   }
-
+  
   ngOnInit(): void {
 
   }

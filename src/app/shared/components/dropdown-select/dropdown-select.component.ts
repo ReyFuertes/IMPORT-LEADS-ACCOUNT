@@ -1,8 +1,6 @@
 import { ISimpleItem } from './../../generics/generic.model';
 import { GenericControl } from './../../generics/generic-control';
-import { Component, OnInit, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormControlName } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'il-dropdown-select',

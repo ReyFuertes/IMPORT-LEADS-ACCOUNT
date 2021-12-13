@@ -34,7 +34,7 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   }
 
   ngOnInit(): void {
-    this.dataSource = this.getStorageValues?.users;
+    this.dataSource = this.getUsersStorageValues
   }
 
   public get getSelectedLanguage(): string {
@@ -43,17 +43,22 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
 
   public onSubmit(): void {
     setTimeout(() => {
-      if (this.getEmailPasswordForm.valid && this.getGeneralInformationForm.valid) {
+      if (this.isFormValid) {
+        debugger
         this.store.dispatch(createCustomerAction({
           payload: {
-            email_password: this.getEmailPasswordFormValues,
-            general_information: this.getGeneralInformationFormValues,
-            user_information: this.getUserFormValues
+            email_password: this.getEmailPasswordStorageValues,
+            general_information: this.getGeneralInformationStorageValues,
+            user_information: this.getUsersStorageValues
           }
         }))
       }
     }, 100);
-    //this.router.navigateByUrl(`onboarding/submitted`);
+    this.router.navigateByUrl(`onboarding/submitted`);
+  }
+
+  public get isFormValid(): boolean {
+    return this.getEmailPasswordStorageValues && this.getGeneralInformationStorageValues && this.getUsersStorageValues
   }
 
   public onPrev(): void {

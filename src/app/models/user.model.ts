@@ -8,6 +8,7 @@ export interface IUser {
   password?: string;
   roles: IRole[];
   username?: string;
+  subscription?: string;
 }
 export interface IAccess {
   id?: string;

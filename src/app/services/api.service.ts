@@ -7,6 +7,12 @@ import { StorageService } from '../modules/service/storage.service';
 import { IRole } from '../models/generic.model';
 
 @Injectable({ providedIn: 'root' })
+export class SubscriptionService extends BaseService<any> {
+  constructor(http: HttpClient, storageSrv: StorageService) {
+    super(http, 'subscription', storageSrv);
+  }
+}
+@Injectable({ providedIn: 'root' })
 export class AccessService extends BaseService<IAccess> {
   constructor(http: HttpClient, storageSrv: StorageService) {
     super(http, 'access', storageSrv);

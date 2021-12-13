@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { RootState } from 'src/app/store/root.reducer';
 import { environment } from 'src/environments/environment';
 import { getUserAccessSelector, getUserRolesSelector } from 'src/app/store/selectors/app.selector';
 import { ISimpleItem } from 'src/app/shared/generics/generic.model';
+import { IUserInformation } from 'src/app/models/onboarding.model';
 
 
 @Component({
@@ -21,7 +22,7 @@ import { ISimpleItem } from 'src/app/shared/generics/generic.model';
   templateUrl: './users-information.component.html',
   styleUrls: ['./users-information.component.scss']
 })
-export class UsersInformationComponent extends GenericOnboardingComponent implements OnInit {
+export class UsersInformationComponent extends GenericOnboardingComponent implements OnInit, AfterViewInit {
   public imgPath: string = environment.imgPath;
   public columnsToDisplay = ['username', 'firstname', 'lastname', 'role', 'access', 'actions'];
   public roles: ISimpleItem[];
@@ -30,12 +31,15 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
     super(store, router, route, storageService, fb);
     this.store.pipe(select(getUserRolesSelector)).subscribe(values => this._storageService.set('r_l_s', JSON.stringify(values)));
     this.store.pipe(select(getUserAccessSelector)).subscribe(values => this._storageService.set('_cc_s', JSON.stringify(values)));
-    this.formUsersArray = this.form.get('users') as FormArray;
   }
 
   ngOnInit(): void {
-    this.dataSource = this.getStorageValues?.users;
-    this.formUsersArray.patchValue(this.getStorageValues?.users);
+    this.getUsersForm.patchValue(this.getUsersStorageValues);
+    this.dataSource = this.getUsersStorageValues;
+  }
+
+  ngAfterViewInit(): void {
+    this.subscriberMaxUserReached = Number(this.dataSource?.length) >= Number(this.subscription?.max_users);
   }
 
   public onAddUser(): void {
@@ -46,18 +50,28 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
     });
     dialogRef.afterClosed().subscribe((result: IUser) => {
       if (result) {
-        const user: IUser = {
-          firstname: result?.firstname,
-          lastname: result?.lastname,
-          username: result?.username,
-          password: result?.password,
-          access: result?.access,
-          roles: result?.roles
+        //check if the email exist already in the form
+        const isUserExist = this.getUsersStorageValues.find(value => value.username === result?.username);
+        //check if the email exist already in the storage values
+        const isUserExistInFormValues = this.getUsersForm.value?.find(value => value.username === result?.username);
+        if (!isUserExist && !isUserExistInFormValues) {
+          const existingStorageUsers = this.getUsersForm.value || [];
+          const updatedUsers = existingStorageUsers.concat({
+            firstname: result?.firstname,
+            lastname: result?.lastname,
+            username: result?.username,
+            password: result?.password,
+            access: result?.access,
+            roles: result?.roles
+          });
+          this.addUsersToForm(updatedUsers);
         }
-        this.addUser(user);
-        this.dataSource = this.formUsersArray.value;
+        this.setUsersToStorage();
+        this.dataSource = this.getUsersForm.value;
         
-        this.setStorageValue('onboarding');
+        if (this.getUsersLength >= Number(this.subscription?.max_users)) {
+          this.subscriberMaxUserReached = true;
+        }
       }
     });
   }
@@ -80,7 +94,7 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
             roles: result?.roles
           }
           this.onDeleteUser(user);
-          this.addUser(user);
+          // this.addUserToFormArray(user);
           this.dataSource = this.formUsersArray.value;
           this.setStorageValue('onboarding');
         }
@@ -96,6 +110,7 @@ export class UsersInformationComponent extends GenericOnboardingComponent implem
   }
 
   public onNext(): void {
+    this.setUsersToStorage();
     super.onNext(`onboarding/review/${this.id}`);
   }
 }

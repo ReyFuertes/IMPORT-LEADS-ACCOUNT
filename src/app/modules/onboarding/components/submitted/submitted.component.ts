@@ -21,6 +21,7 @@ export class SubmittedComponent extends GenericOnboardingComponent implements On
   ngOnInit(): void { }
 
   public done(): void {
-    this.router.navigateByUrl(`onboarding/${this.id}`);
+    this.router.navigateByUrl(`404`);
+    this.storageService.clear();
   }
 }

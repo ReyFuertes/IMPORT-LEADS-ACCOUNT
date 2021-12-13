@@ -25,13 +25,16 @@ export class GeneralInformationComponent extends GenericOnboardingComponent impl
     super(store, router, route, storageService, fb);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getGeneralInformationForm.patchValue(this.getGeneralInformationStorageValues);
+  }
 
   public onPrev(): void {
-    this.router.navigateByUrl(`onboarding/${this.id}`);
+    super.onPrev(`onboarding/${this.id}`);
   }
 
   public onNext(): void {
+    this.setGeneralInformationToStorage();
     super.onNext(`onboarding/users-information/${this.id}`);
   }
 }

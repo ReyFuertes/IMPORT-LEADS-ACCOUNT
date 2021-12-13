@@ -1,6 +1,6 @@
 <div class="review-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <div>
-    <img class="logo" [src]="imgPath + 'logo.png'" />
+    <img class="logo" src="https://rubucepo.sirv.com/Images/iaad/logo.png" />
   </div>
   <div class="content">
     <mat-card>
@@ -9,37 +9,37 @@
           <h3>Review</h3>
         </div>
         <div class="email-password">
-          <div class="row"><span>Email:</span> {{ getEmailPasswordForm.get('username').value }}</div>
+          <div class="row"><span>Email:</span> {{ getEmailPasswordStorageValues.username }}</div>
           <div class="row"><span>Password:</span> *****</div>
         </div>
         <div>
           <div class="personal-details" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
             <div fxFlex="47">
               <label>{{ 'Firstname' }}</label>
-              <div>{{ getGeneralInformationForm.get('firstname')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.firstname }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Lastname' }}</label>
-              <div>{{ getGeneralInformationForm.get('lastname')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.lastname }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Phone Number' }}</label>
-              <div>{{ getGeneralInformationForm.get('phoneNumber')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.phone_number }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <div>{{ getGeneralInformationForm.get('address')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.address }}</div>
             </div>
           </div>
 
           <div class="company-details" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px">
             <div fxFlex="47">
               <label>{{ 'Company Name' }}</label>
-              <div>{{ getGeneralInformationForm.get('companyName')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.company_name }}</div>
             </div>
             <div fxFlex="47">
               <label>{{ 'Address' }}</label>
-              <div>{{ getGeneralInformationForm.get('companyAddress')?.value }}</div>
+              <div>{{ getGeneralInformationStorageValues.company_address }}</div>
             </div>
           </div>
 
@@ -98,7 +98,7 @@
           <button (click)="onPrev()" mat-flat-button class="il-button default large" fxLayoutGap="10px">
             {{ 'PREVIOUS' }}
           </button>
-          <button [disabled]="!getEmailPasswordForm.valid || !getGeneralInformationForm.valid" (click)="onSubmit()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
+          <button [disabled]="!isFormValid" (click)="onSubmit()" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
             {{ 'SUBMIT' }}
           </button>
         </div>

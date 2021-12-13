@@ -12,6 +12,7 @@ export class GenericControl<T> extends GenericDestroyPageComponent {
   @Input() public controlName: any;
   @Input() public form: FormGroup;
   @Input() public selectedItem: T;
+  @Input() public readonly: boolean;
 
   public svgPath: string = environment.svgPath;
   public imgPath: string = environment.imgPath;

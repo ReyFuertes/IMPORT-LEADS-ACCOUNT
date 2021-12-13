@@ -1,6 +1,6 @@
 <div class="company-information-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <div>
-    <img class="logo" [src]="imgPath + 'logo.png'" />
+    <img class="logo" src="https://rubucepo.sirv.com/Images/iaad/logo.png" />
   </div>
   <mat-card>
     <div class="content" fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
@@ -25,7 +25,7 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Phone Number' }}</label>
-            <il-input [form]="getGeneralInformationForm" placeholder="Phone Number" controlName="phoneNumber" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Phone Number" controlName="phone_number" floatLabel="never"></il-input>
           </div>
           <div>
             <label>{{ 'Address' }}</label>
@@ -38,11 +38,11 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Company Name' }}</label>
-            <il-input [form]="getGeneralInformationForm" placeholder="Company Name" controlName="companyName" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Company Name" controlName="company_name" floatLabel="never"></il-input>
           </div>
           <div>
             <label>{{ 'Address' }}</label>
-            <il-input [form]="getGeneralInformationForm" placeholder="Company Address" controlName="companyAddress" floatLabel="never"></il-input>
+            <il-input [form]="getGeneralInformationForm" placeholder="Company Address" controlName="company_address" floatLabel="never"></il-input>
           </div>
         </div>
       </div>
