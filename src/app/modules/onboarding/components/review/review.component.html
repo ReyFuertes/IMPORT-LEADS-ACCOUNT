@@ -73,7 +73,7 @@
               <th mat-header-cell *matHeaderCellDef> Roles </th>
               <td mat-cell *matCellDef="let element">
                 <div fxLayout="row wrap" fxLayoutGap="5px">
-                  <div *ngFor="let role of getStorageValue(element?.roles, 'r_l_s')" class="badge default">{{ role?.label | titlecase }}</div>
+                  <div *ngFor="let role of getStorageValue(element?.roles, 'roles')" class="badge default">{{ role?.label | titlecase }}</div>
                 </div>
               </td>
             </ng-container>
@@ -82,7 +82,7 @@
               <th mat-header-cell *matHeaderCellDef> Access </th>
               <td mat-cell *matCellDef="let element">
                 <div fxLayout="row wrap" fxLayoutGap="5px">
-                  <div *ngFor="let role of getStorageValue(element?.access, '_cc_s')" class="badge default">
+                  <div *ngFor="let role of getStorageValue(element?.access, 'access')" class="badge default">
                     {{ role?.label | titlecase }}
                   </div>
                 </div>

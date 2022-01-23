@@ -13,7 +13,8 @@ export class OnboardingEffects {
     ofType(isUserInvitedAction),
     switchMap(({ id }) => this.onboardingService.getById(id, 'invited').pipe(
       map((response: IUser) => {
-        this.storageService.set('inv', true)
+        this.storageService.set('users', JSON.stringify(response?.customer_users));
+        this.storageService.set('inv', true);
         return isUserInvitedSuccessAction({ response });
       })
     ))
@@ -30,6 +31,6 @@ export class OnboardingEffects {
       })
     ))
   ));
-      
+
   constructor(private actions$: Actions, private onboardingService: OnboardingService, private storageService: StorageService) { }
 }

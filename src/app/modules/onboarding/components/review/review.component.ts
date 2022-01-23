@@ -34,7 +34,8 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   }
 
   ngOnInit(): void {
-    this.dataSource = this.getUsersStorageValues
+    this.dataSource = this.getUsersStorageValues;
+    debugger
   }
 
   public get getSelectedLanguage(): string {
@@ -44,7 +45,6 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   public onSubmit(): void {
     setTimeout(() => {
       if (this.isFormValid) {
-        debugger
         this.store.dispatch(createCustomerAction({
           payload: {
             email_password: this.getEmailPasswordStorageValues,

@@ -4,18 +4,18 @@ import { createCustomerSuccessAction, isUserInvitedSuccessAction } from "./onboa
 
 export interface OnboardingState {
   responseStatus: any;
-  isUserInvited: IUser;
+  invitedUser: IUser;
 }
 
 export const initialState: OnboardingState = {
   responseStatus: null,
-  isUserInvited: null
+  invitedUser: null
 };
 
 const onboardingReducer = createReducer(
   initialState,
   on(isUserInvitedSuccessAction, (state, action) => {
-    return Object.assign({}, state, { isUserInvited: action.response });
+    return Object.assign({}, state, { invitedUser: action.response });
   }),
   on(createCustomerSuccessAction, (state, action) => {
     return Object.assign({}, state, { responseStatus: action.response });

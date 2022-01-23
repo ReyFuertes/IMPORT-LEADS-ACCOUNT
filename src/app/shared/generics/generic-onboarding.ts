@@ -24,7 +24,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public formUsersArray: FormArray;
   public dataSource: any;
   public id: string;
-  public isUserInvited: IUser;
+  public invitedUser: IUser;
   public subscriptions: ISimpleItem[];
   public subscription: ISubscription;
   public subscriberMaxUserReached: boolean;
@@ -33,12 +33,14 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
     super();
     //check if the user is invited
     this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id && !this.isUserInvited) {
+
+    if (this.id && !this.invitedUser) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
     };
-    const isUserInvited = this.storageService.get('inv');
-    if (!isUserInvited) {
-      this.router.navigateByUrl('404');
+
+    const invitedUser = this.storageService.get('inv');
+    if (!invitedUser) {
+      setTimeout(() => this.router.navigateByUrl('404'));
     }
 
     //intialize the form wizard
@@ -74,11 +76,16 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       });
 
     //we need to display the invited customer information and its subscription
-    this.store.pipe(select(getIsUserInvitedSelector)).subscribe(isInvited => {
-      this.isUserInvited = isInvited;
-      this.getEmailPasswordForm.get('id').patchValue(this.isUserInvited?.id, { emitEvent: false });
-      this.getEmailPasswordForm.get('username').patchValue(this.isUserInvited?.username, { emitEvent: false });
-      this.form.get('subscription').patchValue(this.isUserInvited?.subscription, { emitEvent: false });
+    this.store.pipe(select(getIsUserInvitedSelector)).subscribe(invitedUser => {
+      this.invitedUser = invitedUser;
+      this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
+      this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
+      if (!this.getUsersForm.value) {
+        this.getUsersForm.patchValue(this.invitedUser?.customer_users);
+        this.dataSource = this.invitedUser?.customer_users;
+      }
+      this.form.get('generalInformation').patchValue(this.invitedUser?.profile);
+      this.form.get('subscription').patchValue(this.invitedUser?.subscription);
     });
 
     //listen to subscription change so we can display the subscription name in the dropdown
@@ -87,6 +94,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
         this.store.pipe(select(getSubscriptionByIdSelector(subscriberId)))
           .subscribe(subscription => {
             this.subscription = subscription;
+            this.subscriberMaxUserReached = Number(this.dataSource?.length) >= Number(this.subscription?.max_users);
           });
       }
     });
@@ -109,13 +117,19 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   }
 
 
-  public getStorageValue(values: string[], index: string): any {
+  public getStorageValue(values: string[], index: string): any[] {
     const value = this.storageService.get(index);
     if (!value) return [];
 
-    let arr = JSON.parse(this.storageService.get(index)) || [];
-
-    const results = arr?.filter(o => values.includes(o?.value));
+    let storageArr = this.storageService.get(index);
+    if (storageArr) {
+      storageArr = JSON.parse(this.storageService.get(index)) || [];
+    } else {
+      return [];
+    }
+    const results = storageArr?.filter(o => {
+      return values?.includes(o?.value);
+    });
     return results;
   }
 
@@ -148,7 +162,11 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   }
 
   public get getUsersStorageValues(): any {
-    return this.storageService.get('users') || [];
+    let customerUsers = this.storageService.get('users') || [];
+    if (customerUsers?.length > 0) {
+      customerUsers = JSON.parse(customerUsers);
+    }
+    return customerUsers;
   }
 
   public get getEmailPasswordStorageValues(): any {

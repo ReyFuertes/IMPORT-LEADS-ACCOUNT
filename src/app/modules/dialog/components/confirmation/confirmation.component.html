@@ -1,0 +1,18 @@
+<div class="il-dialog" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <div fxLayoutAlign="end center" fxLayout="row">
+    <div fxLayoutAlign="end center">
+      <img (click)="dialogRef.close(false)" [src]="svgPath + 'close-icon-big-gray.svg'" />
+    </div>
+  </div>
+  <div class="content">
+    <h2>{{ actionText[data?.action]?.message }}</h2>
+  </div>
+  <div class="footer">
+    <button (click)="dialogRef.close(true)" mat-flat-button class="il-button default large" fxLayoutGap="5px">
+      {{ 'Ok' }}
+    </button>
+    <div>
+      <button mat-flat-button class="il-button default large" (click)="dialogRef.close(false)">{{ 'Close' }}</button>
+    </div>
+  </div>
+</div>

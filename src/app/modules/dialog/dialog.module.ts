@@ -16,9 +16,11 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { AddUserDialogComponent } from './components/add-user-dialog/add-user-dialog.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 const dialogComponents = [
-  AddUserDialogComponent
+  AddUserDialogComponent,
+  ConfirmationComponent
 ];
 
 const materialModules = [

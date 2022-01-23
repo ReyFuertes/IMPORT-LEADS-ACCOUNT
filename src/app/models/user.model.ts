@@ -2,13 +2,28 @@ import { IRole } from "./generic.model";
 
 export interface IUser {
   id?: string;
-  access: IAccess[];
   firstname?: string;
   lastname?: string;
   password?: string;
   roles: IRole[];
+  access: IAccess[];
   username?: string;
   subscription?: string;
+  customer_users?: IUser[];
+  profile?: IProfile
+}
+export interface IProfile {
+  address?: string;
+  api_url?: string;
+  company_address?: string;
+  company_name?: string;
+  database_name?: string;
+  firstname?: string;
+  id?: string;
+  language?: string;
+  lastname?: string;
+  phone_number?: string;
+  website_url?: string;
 }
 export interface IAccess {
   id?: string;

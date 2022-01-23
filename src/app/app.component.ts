@@ -24,7 +24,5 @@ export class AppComponent implements OnInit {
     this.store.dispatch(getSubscriptionsAction());
   }
   
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 }

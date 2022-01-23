@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
       .pipe(
         debounceTime(5000),
         tap(isLoggedIn => {
-          debugger
           if (!isLoggedIn) {
             //this.router.navigateByUrl('404');
           }
