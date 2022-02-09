@@ -35,7 +35,6 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
 
   ngOnInit(): void {
     this.dataSource = this.getUsersStorageValues;
-    debugger
   }
 
   public get getSelectedLanguage(): string {

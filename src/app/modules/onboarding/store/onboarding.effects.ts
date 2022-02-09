@@ -6,6 +6,7 @@ import { createCustomerAction, createOnboardingFailedAction, createCustomerSucce
 import { OnboardingService } from '../onboarding.service';
 import { IUser } from 'src/app/models/user.model';
 import { StorageService } from '../../service/storage.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class OnboardingEffects {
@@ -13,13 +14,20 @@ export class OnboardingEffects {
     ofType(isUserInvitedAction),
     switchMap(({ id }) => this.onboardingService.getById(id, 'invited').pipe(
       map((response: IUser) => {
-        this.storageService.set('users', JSON.stringify(response?.customer_users));
-        this.storageService.set('inv', true);
+        if(response) {
+          this.storageService.set('inv', true);
+          if(response?.customer_users?.length > 0) {
+            this.storageService.set('users', JSON.stringify(response?.customer_users));
+          }
+        } else {
+          console.log('User is not invited.')
+          setTimeout(() => this.router.navigateByUrl('404'), 500);
+        }
         return isUserInvitedSuccessAction({ response });
       })
     ))
   ));
-
+  
   createCustomerAction$ = createEffect(() => this.actions$.pipe(
     ofType(createCustomerAction),
     switchMap(({ payload }) => this.onboardingService.post(payload, 'onboard').pipe(
@@ -32,5 +40,5 @@ export class OnboardingEffects {
     ))
   ));
 
-  constructor(private actions$: Actions, private onboardingService: OnboardingService, private storageService: StorageService) { }
+  constructor(private router: Router, private actions$: Actions, private onboardingService: OnboardingService, private storageService: StorageService) { }
 }

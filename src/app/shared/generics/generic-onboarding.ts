@@ -15,7 +15,6 @@ import { takeUntil } from 'rxjs/operators';
 import { ISimpleItem } from './generic.model';
 import { ISubscription } from 'src/app/models/generic.model';
 import { passwordValidator } from '../util/password';
-import { IUserInformation } from 'src/app/models/onboarding.model';
 
 @Directive()
 export class GenericOnboardingComponent extends GenericDestroyPageComponent {
@@ -33,15 +32,9 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
     super();
     //check if the user is invited
     this.id = this.route.snapshot.paramMap.get('id');
-
-    if (this.id && !this.invitedUser) {
+    if (this.id) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
     };
-
-    const invitedUser = this.storageService.get('inv');
-    if (!invitedUser) {
-      setTimeout(() => this.router.navigateByUrl('404'));
-    }
 
     //intialize the form wizard
     this.form = this.fb.group({
@@ -87,7 +80,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       this.form.get('generalInformation').patchValue(this.invitedUser?.profile);
       this.form.get('subscription').patchValue(this.invitedUser?.subscription);
     });
-
+    
     //listen to subscription change so we can display the subscription name in the dropdown
     this.form.get('subscription').valueChanges.subscribe(subscriberId => {
       if (subscriberId) {
@@ -115,7 +108,6 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public setStorageValue(name: string): void {
     this.storageService.set(name, this.form.value);
   }
-
 
   public getStorageValue(values: string[], index: string): any[] {
     const value = this.storageService.get(index);
@@ -164,8 +156,13 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public get getUsersStorageValues(): any {
     let customerUsers = this.storageService.get('users') || [];
     if (customerUsers?.length > 0) {
-      customerUsers = JSON.parse(customerUsers);
+      if(Array.isArray(customerUsers)) {
+        customerUsers = customerUsers;
+      } else {
+        customerUsers = JSON.parse(customerUsers);
+      }
     }
+    console.log('getUsersStorageValues', customerUsers)
     return customerUsers;
   }
 

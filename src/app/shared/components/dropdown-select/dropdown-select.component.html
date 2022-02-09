@@ -1,6 +1,6 @@
 <div *ngIf="form" [formGroup]="form" fxLayout="column" fxLayoutAlign="start start">
   <label>{{ label }}</label>
-  <p-dropdown appendTo="body" [options]="options" [formControlName]="controlName" defaultLabel="Select Item">
+  <p-dropdown appendTo="body" [options]="options" [readonly]="readonly" [formControlName]="controlName" defaultLabel="Select Item">
     <ng-template let-option pTemplate="item">
       <div class="option-item">
         <div>{{option.label}}</div>
