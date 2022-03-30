@@ -31,11 +31,10 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
 
   constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder, store: Store<RootState>) {
     super(store, router, route, storageService, fb);
-  }
-
-  ngOnInit(): void {
     this.dataSource = this.getUsersStorageValues;
   }
+
+  ngOnInit(): void { }
 
   public get getSelectedLanguage(): string {
     return this.languageOptions.find(lang => lang.value === this.getGeneralInformationForm.get('language')?.value)?.label;
@@ -53,11 +52,14 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
         }))
       }
     }, 100);
+    this.storageService.set('sbmttd', true)
     this.router.navigateByUrl(`onboarding/submitted`);
   }
 
   public get isFormValid(): boolean {
-    return this.getEmailPasswordStorageValues && this.getGeneralInformationStorageValues && this.getUsersStorageValues
+    return this.getEmailPasswordStorageValues
+      && this.getGeneralInformationStorageValues
+      && this.getUsersStorageValues
   }
 
   public onPrev(): void {

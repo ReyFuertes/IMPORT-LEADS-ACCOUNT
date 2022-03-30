@@ -29,9 +29,13 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public subscription: ISubscription;
   public subscriberMaxUserReached: boolean;
   public isUserValid: boolean | null = null;
+  public doneRedirectUrl: string = 'https://iaad.management/';
 
   constructor(public store: Store<RootState>, public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
     super();
+    if (this.isSubmitted) {
+      window.location.href = this.doneRedirectUrl;
+    }
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
@@ -68,14 +72,14 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       });
 
     this.store.pipe(select(getIsUserInvitedSelector)).subscribe(invitedUser => {
-      if(invitedUser === null) return;
-      
+      if (invitedUser === null) return;
+
       if (invitedUser) {
         this.isUserValid = true;
         this.invitedUser = invitedUser;
         this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
         this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
-        
+
         if (this.invitedUser?.is_user === true) {
           this.form.get('is_user').patchValue(this.invitedUser.is_user, { emitEvent: false });
           this.form.get('subscription').setValidators(null);
@@ -97,7 +101,6 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       } else {
         this.isUserValid = false;
       }
-      console.log(this.isUserValid)
     });
 
     this.form.get('subscription').valueChanges.pipe(takeUntil(this.$unsubscribe))
@@ -194,6 +197,10 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       }
     }
     return customerUsers;
+  }
+
+  public get isSubmitted(): any {
+    return this.storageService.get('sbmttd') === true;
   }
 
   public get getEmailPasswordStorageValues(): any {
