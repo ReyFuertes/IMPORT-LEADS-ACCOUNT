@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, retry, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { createCustomerAction, createOnboardingFailedAction, createCustomerSuccessAction, isUserInvitedAction, isUserInvitedSuccessAction } from './onboarding.actions';
+import { createCustomerAction, createOnboardingFailedAction, createCustomerSuccessAction, isUserInvitedAction, isUserInvitedSuccessAction, userNotInvitedAction } from './onboarding.actions';
 import { OnboardingService } from '../onboarding.service';
 import { IUser } from 'src/app/models/user.model';
 import { StorageService } from '../../service/storage.service';
@@ -20,13 +20,19 @@ export class OnboardingEffects {
             this.storageService.set('users', JSON.stringify(response?.customer_users));
           }
         } else {
-          console.log('User is not invited.')
           setTimeout(() => this.router.navigateByUrl('404'), 500);
         }
         return isUserInvitedSuccessAction({ response });
       }),
-      retry(3)
+      retry(3),
+      catchError(() => of(userNotInvitedAction()))
     ))
+  ));
+
+  userNotInvitedAction$ = createEffect(() => this.actions$.pipe(
+    ofType(userNotInvitedAction),
+    tap(() => this.router.navigateByUrl('404')),
+    map(() =>  null)
   ));
   
   createCustomerAction$ = createEffect(() => this.actions$.pipe(

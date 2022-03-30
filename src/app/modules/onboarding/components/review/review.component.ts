@@ -52,7 +52,7 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
         }))
       }
     }, 100);
-    this.storageService.set('sbmttd', true)
+    this.storageService.set('sbmttd', 1)
     this.router.navigateByUrl(`onboarding/submitted`);
   }
 

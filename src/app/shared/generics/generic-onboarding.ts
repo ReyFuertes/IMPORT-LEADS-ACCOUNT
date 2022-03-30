@@ -13,7 +13,7 @@ import { getIsUserInvitedSelector } from 'src/app/modules/onboarding/store/onboa
 import { getSubscriptionByIdSelector, getSubscriptionsSelector } from 'src/app/store/selectors/subscription.selector';
 import { takeUntil } from 'rxjs/operators';
 import { ISimpleItem } from './generic.model';
-import { ISubscription } from 'src/app/models/generic.model';
+import { ISubscription, SubmissionType } from 'src/app/models/generic.model';
 import { passwordValidator } from '../util/password';
 
 @Directive()
@@ -33,9 +33,6 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
 
   constructor(public store: Store<RootState>, public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
     super();
-    if (this.isSubmitted) {
-      window.location.href = this.doneRedirectUrl;
-    }
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
@@ -77,8 +74,16 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       if (invitedUser) {
         this.isUserValid = true;
         this.invitedUser = invitedUser;
+        
         this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
         this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
+     
+        if (invitedUser?.is_submitted === SubmissionType.submitted) {
+          this.storageService.set('sbmttd', SubmissionType.submitted);
+        } else {
+          this.storageService.set('sbmttd', SubmissionType.pending);
+        }
+        this.checkIfSubmitted();
 
         if (this.invitedUser?.is_user === true) {
           this.form.get('is_user').patchValue(this.invitedUser.is_user, { emitEvent: false });
@@ -113,6 +118,12 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
             });
         }
       });
+  }
+
+  public checkIfSubmitted(): void {
+    if (this.isSubmitted === true) {
+      window.location.href = this.doneRedirectUrl;
+    }
   }
 
   public get isUserLoading(): boolean {
@@ -200,7 +211,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   }
 
   public get isSubmitted(): any {
-    return this.storageService.get('sbmttd') === true;
+    return this.storageService.get('sbmttd') === 1;
   }
 
   public get getEmailPasswordStorageValues(): any {

@@ -1,3 +1,7 @@
+export enum SubmissionType {
+  pending = 0,
+  submitted = 1
+}
 export interface ISubscription {
   id?: string;
   name?: string;

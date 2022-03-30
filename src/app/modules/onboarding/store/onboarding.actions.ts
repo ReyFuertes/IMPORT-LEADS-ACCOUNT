@@ -8,7 +8,11 @@ export enum OnboardingActionTypes {
   createOnboardingFailedAction = '[Onboarding] create (failed)',
   isUserInvitedAction = '[Public] user invited',
   isUserInvitedSuccessAction = '[Public] user invited (success)',
+  userNotInvitedAction = '[Public] user not invited',
 }
+export const userNotInvitedAction = createAction(
+  OnboardingActionTypes.userNotInvitedAction
+);
 export const isUserInvitedAction = createAction(
   OnboardingActionTypes.isUserInvitedAction,
   props<{ id: string }>()

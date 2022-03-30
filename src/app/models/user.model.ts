@@ -12,6 +12,7 @@ export interface IUser {
   customer_users?: IUser[];
   profile?: IProfile;
   is_user?: boolean;
+  is_submitted?: number;
 }
 export interface IProfile {
   address?: string;

@@ -1,4 +1,5 @@
-<div class="users-information-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+<div *ngIf="!isSubmitted" class="users-information-container" fxLayout="column" fxLayoutAlign="center center"
+  fxFlexFill>
   <div>
     <img class="logo" src="https://rubucepo.sirv.com/Images/iaad/logo.png" />
   </div>
@@ -8,7 +9,9 @@
     </div>
     <div fxLayout="row" class="add-user" fxLayoutAlign="end center">
       <div *ngIf="subscription" class="subscription-text" fxFlex>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="!subscriberMaxUserReached"><i class="pi pi-info-circle"></i> Your plan is {{subscription?.name}} with a limit of {{ subscription?.max_users }} users.</div>
+        <div fxLayout="row" fxLayoutAlign="start center" *ngIf="!subscriberMaxUserReached"><i
+            class="pi pi-info-circle"></i> Your plan is {{subscription?.name}} with a limit of {{
+          subscription?.max_users }} users.</div>
         <div *ngIf="subscriberMaxUserReached" class="notice" fxLayout="row">
           <i class="pi pi-times-circle"></i>
           <div fxLayout="row" fxLayoutAlign="start center">
@@ -16,7 +19,8 @@
           </div>
         </div>
       </div>
-      <button [disabled]="subscriberMaxUserReached" (click)="onAddUser()" mat-flat-button class="il-button default large" fxLayoutGap="10px">
+      <button [disabled]="subscriberMaxUserReached" (click)="onAddUser()" mat-flat-button
+        class="il-button default large" fxLayoutGap="10px">
         {{ 'Add User' }}
       </button>
     </div>
@@ -47,7 +51,8 @@
         <th mat-header-cell *matHeaderCellDef> Roles </th>
         <td mat-cell *matCellDef="let element">
           <div fxLayout="row wrap" fxLayoutGap="5px">
-            <div *ngFor="let role of getStorageValue(element?.roles, 'roles')" class="badge default">{{ role?.label | titlecase }}</div>
+            <div *ngFor="let role of getStorageValue(element?.roles, 'roles')" class="badge default">{{ role?.label |
+              titlecase }}</div>
           </div>
         </td>
       </ng-container>
