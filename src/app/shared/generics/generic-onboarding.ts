@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IUser } from 'src/app/models/user.model';
 import { StorageService } from 'src/app/modules/service/storage.service';
@@ -19,6 +19,7 @@ import { passwordValidator } from '../util/password';
 @Directive()
 export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public imgPath: string = environment.imgPath;
+  public svgPath: string = environment.svgPath;
   public form: FormGroup;
   public formUsersArray: FormArray;
   public dataSource: any;
@@ -27,16 +28,15 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public subscriptions: ISimpleItem[];
   public subscription: ISubscription;
   public subscriberMaxUserReached: boolean;
+  public isUserValid: boolean | null = null;
 
   constructor(public store: Store<RootState>, public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
     super();
-    //check if the user is invited
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
     };
 
-    //intialize the form wizard
     this.form = this.fb.group({
       subscription: [null, Validators.required],
       emailPassword: this.fb.group({
@@ -56,41 +56,76 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
         company_address: [null, Validators.required],
         language: ['en', Validators.required]
       }),
-      users: [null, Validators.required]
+      users: [null, Validators.required],
+      is_user: [null]
     });
 
-    //initialize the form array for customer users
     this.formUsersArray = this.form.get('users') as FormArray;
 
-    //load the subscription options
     this.store.pipe(select(getSubscriptionsSelector), takeUntil(this.$unsubscribe))
       .subscribe(subscriptions => {
         this.subscriptions = subscriptions?.map(sub => ({ label: sub.name, value: sub.id }));
       });
 
-    //we need to display the invited customer information and its subscription
     this.store.pipe(select(getIsUserInvitedSelector)).subscribe(invitedUser => {
-      this.invitedUser = invitedUser;
-      this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
-      this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
-      if (!this.getUsersForm.value) {
-        this.getUsersForm.patchValue(this.invitedUser?.customer_users);
-        this.dataSource = this.invitedUser?.customer_users;
+      if(invitedUser === null) return;
+      
+      if (invitedUser) {
+        this.isUserValid = true;
+        this.invitedUser = invitedUser;
+        this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
+        this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
+        
+        if (this.invitedUser?.is_user === true) {
+          this.form.get('is_user').patchValue(this.invitedUser.is_user, { emitEvent: false });
+          this.form.get('subscription').setValidators(null);
+        } else {
+          this.form.get('subscription').setValidators(Validators.required);
+        }
+        this.form.get('subscription').updateValueAndValidity();
+
+        if (!this.getUsersForm.value) {
+          this.getUsersForm.patchValue(this.invitedUser?.customer_users);
+          this.dataSource = this.invitedUser?.customer_users;
+        }
+
+        if (!this.getGeneralInformationStorageValues) {
+          this.form.get('generalInformation').patchValue(this.invitedUser?.profile);
+        }
+
+        this.form.get('subscription').patchValue(this.invitedUser?.subscription);
+      } else {
+        this.isUserValid = false;
       }
-      this.form.get('generalInformation').patchValue(this.invitedUser?.profile);
-      this.form.get('subscription').patchValue(this.invitedUser?.subscription);
+      console.log(this.isUserValid)
     });
-    
-    //listen to subscription change so we can display the subscription name in the dropdown
-    this.form.get('subscription').valueChanges.subscribe(subscriberId => {
-      if (subscriberId) {
-        this.store.pipe(select(getSubscriptionByIdSelector(subscriberId)))
-          .subscribe(subscription => {
-            this.subscription = subscription;
-            this.subscriberMaxUserReached = Number(this.dataSource?.length) >= Number(this.subscription?.max_users);
-          });
-      }
-    });
+
+    this.form.get('subscription').valueChanges.pipe(takeUntil(this.$unsubscribe))
+      .subscribe(subscriberId => {
+        if (subscriberId) {
+          this.store.pipe(select(getSubscriptionByIdSelector(subscriberId)))
+            .subscribe(subscription => {
+              this.subscription = subscription;
+              this.subscriberMaxUserReached = Number(this.dataSource?.length) >= Number(this.subscription?.max_users);
+            });
+        }
+      });
+  }
+
+  public get isUserLoading(): boolean {
+    return this.isUserValid === null;
+  }
+
+  public get isUserValidated(): boolean {
+    return this.isUserValid === true;
+  }
+
+  public get isUserInvalid(): boolean {
+    return this.isUserValid === false;
+  }
+
+  public get isUser(): boolean {
+    return !!this.form.get('is_user')?.value;
   }
 
   public get getUsersLength(): number {
@@ -125,10 +160,6 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
     return results;
   }
 
-  public splitToArray(str: string): any[] {
-    return str.split(',');
-  }
-
   public removeUser(item: any): void {
     let updatedFormUsers = this.form.get('users').value;
     _.remove(updatedFormUsers, user => user.username === item?.username);
@@ -156,13 +187,12 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public get getUsersStorageValues(): any {
     let customerUsers = this.storageService.get('users') || [];
     if (customerUsers?.length > 0) {
-      if(Array.isArray(customerUsers)) {
+      if (Array.isArray(customerUsers)) {
         customerUsers = customerUsers;
       } else {
         customerUsers = JSON.parse(customerUsers);
       }
     }
-    console.log('getUsersStorageValues', customerUsers)
     return customerUsers;
   }
 

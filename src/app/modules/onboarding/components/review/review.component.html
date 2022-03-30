@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div class="content">
+        <div *ngIf="!isUser" class="content">
           <h5>Users</h5>
           <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="username">

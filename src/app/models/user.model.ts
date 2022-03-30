@@ -10,7 +10,8 @@ export interface IUser {
   username?: string;
   subscription?: string;
   customer_users?: IUser[];
-  profile?: IProfile
+  profile?: IProfile;
+  is_user?: boolean;
 }
 export interface IProfile {
   address?: string;

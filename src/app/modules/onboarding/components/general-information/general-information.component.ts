@@ -23,6 +23,7 @@ export class GeneralInformationComponent extends GenericOnboardingComponent impl
   }];
   constructor(store: Store<RootState>, router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder) {
     super(store, router, route, storageService, fb);
+
   }
 
   ngOnInit(): void {
@@ -35,6 +36,10 @@ export class GeneralInformationComponent extends GenericOnboardingComponent impl
 
   public onNext(): void {
     this.setGeneralInformationToStorage();
-    super.onNext(`onboarding/users-information/${this.id}`);
+    let url: string = `onboarding/users-information/${this.id}`;
+    if (this.isUser) {
+      url = `onboarding/review/${this.id}`;
+    }
+    super.onNext(url);
   }
 }

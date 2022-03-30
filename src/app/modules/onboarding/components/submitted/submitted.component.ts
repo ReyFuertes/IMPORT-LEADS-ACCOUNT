@@ -21,7 +21,7 @@ export class SubmittedComponent extends GenericOnboardingComponent implements On
   ngOnInit(): void { }
 
   public done(): void {
-    this.router.navigateByUrl('https://iaad.management/');
+    window.location.href = 'https://iaad.management/';
     this.storageService.clear();
   }
 }

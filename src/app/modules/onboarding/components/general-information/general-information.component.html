@@ -1,4 +1,4 @@
-<div class="company-information-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+<div *ngIf="getGeneralInformationForm" class="company-information-container" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <div>
     <img class="logo" src="https://rubucepo.sirv.com/Images/iaad/logo.png" />
   </div>
@@ -8,7 +8,7 @@
         <h3>General Information</h3>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+      <div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Firstname' }}</label>
@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Phone Number' }}</label>
@@ -34,7 +34,7 @@
         </div>
       </div>
 
-      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+      <div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <div>
             <label>{{ 'Company Name' }}</label>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, retry, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { createCustomerAction, createOnboardingFailedAction, createCustomerSuccessAction, isUserInvitedAction, isUserInvitedSuccessAction } from './onboarding.actions';
 import { OnboardingService } from '../onboarding.service';
@@ -24,7 +24,8 @@ export class OnboardingEffects {
           setTimeout(() => this.router.navigateByUrl('404'), 500);
         }
         return isUserInvitedSuccessAction({ response });
-      })
+      }),
+      retry(3)
     ))
   ));
   
