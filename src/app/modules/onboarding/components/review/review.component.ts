@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,7 +16,7 @@ import { createCustomerAction } from '../../store/onboarding.actions';
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
 })
-export class OnboardingReviewComponent extends GenericOnboardingComponent implements OnInit {
+export class OnboardingReviewComponent extends GenericOnboardingComponent implements OnInit, AfterViewInit {
   public imgPath: string = environment.imgPath;
   public form: FormGroup;
   public columnsToDisplay = ['username', 'firstname', 'lastname', 'role', 'access'];
@@ -31,10 +31,14 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
 
   constructor(router: Router, route: ActivatedRoute, storageService: StorageService, fb: FormBuilder, store: Store<RootState>) {
     super(store, router, route, storageService, fb);
-    this.dataSource = this.getUsersStorageValues;
   }
 
   ngOnInit(): void { }
+
+  ngAfterViewInit(): void {
+    this.getUsersForm.patchValue(this.getUsersStorageValues);
+    this.dataSource = this.getUsersStorageValues;
+  }
 
   public get getSelectedLanguage(): string {
     return this.languageOptions.find(lang => lang.value === this.getGeneralInformationForm.get('language')?.value)?.label;
