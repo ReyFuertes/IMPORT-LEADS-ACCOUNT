@@ -42,9 +42,9 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       subscription: [null, Validators.required],
       emailPassword: this.fb.group({
         id: [null, Validators.required],
-        username: [null, Validators.compose([Validators.required])],
-        password: [null, Validators.required],
-        confirm_password: [null, Validators.required]
+        username: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required, Validators.minLength(6)]],
+        confirm_password: [null, [Validators.required, Validators.minLength(6)]],
       }, {
         validator: passwordValidator('password', 'confirm_password')
       }),
