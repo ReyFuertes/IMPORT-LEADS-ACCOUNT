@@ -1,7 +1,7 @@
 import { Directive } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUser } from 'src/app/models/user.model';
+import { IProfile, IUser } from 'src/app/models/user.model';
 import { StorageService } from 'src/app/modules/service/storage.service';
 import { environment } from 'src/environments/environment';
 import { GenericDestroyPageComponent } from './generic-destroy-page';
@@ -15,13 +15,13 @@ import { takeUntil } from 'rxjs/operators';
 import { ISimpleItem } from './generic.model';
 import { ISubscription, SubmissionType } from 'src/app/models/generic.model';
 import { passwordValidator } from '../util/password';
+import { confirmPasswordName, emailPasswordName, generalInformationName, idName, isSubmittedName, isUserModifiedName, isUserName, passwordName, subscriptionName, usernameName, usersName } from '../constants/onboarding';
 
 @Directive()
 export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public imgPath: string = environment.imgPath;
   public svgPath: string = environment.svgPath;
   public form: FormGroup;
-  public formUsersArray: FormArray;
   public dataSource: any;
   public id: string;
   public invitedUser: IUser;
@@ -29,11 +29,11 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   public subscription: ISubscription;
   public subscriberMaxUserReached: boolean;
   public isUserValid: boolean | null = null;
-  public doneRedirectUrl: string = 'https://iaad.management/';
+  public doneRedirectUrl: string = environment.redirectUrl;
 
   constructor(public store: Store<RootState>, public router: Router, private route: ActivatedRoute, public storageService: StorageService, private fb: FormBuilder) {
     super();
-    this.id = this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get(idName);
     if (this.id) {
       this.store.dispatch(isUserInvitedAction({ id: this.id }));
     };
@@ -46,7 +46,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
         password: [null, [Validators.required, Validators.minLength(6)]],
         confirm_password: [null, [Validators.required, Validators.minLength(6)]],
       }, {
-        validator: passwordValidator('password', 'confirm_password')
+        validator: passwordValidator(passwordName, confirmPasswordName)
       }),
       generalInformation: this.fb.group({
         firstname: [null, Validators.required],
@@ -55,60 +55,64 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
         address: [null, Validators.required],
         company_name: [null, Validators.required],
         company_address: [null, Validators.required],
-        language: ['en', Validators.required]
+        language: [null, Validators.required]
       }),
       users: [null, Validators.required],
       is_user: [null]
     });
 
-    this.formUsersArray = this.form.get('users') as FormArray;
-
-    this.store.pipe(select(getSubscriptionsSelector), takeUntil(this.$unsubscribe))
+    this.store.pipe(select(getSubscriptionsSelector),
+      takeUntil(this.$unsubscribe))
       .subscribe(subscriptions => {
         this.subscriptions = subscriptions?.map(sub => ({ label: sub.name, value: sub.id }));
       });
 
-    this.store.pipe(select(getIsUserInvitedSelector)).subscribe(invitedUser => {
-      if (invitedUser === null) return;
+    this.store.pipe(select(getIsUserInvitedSelector),
+      takeUntil(this.$unsubscribe))
+      .subscribe(invitedUser => {
+        if (invitedUser === null) return;
 
-      if (invitedUser) {
-        this.isUserValid = true;
-        this.invitedUser = invitedUser;
-        
-        this.getEmailPasswordForm.get('id').patchValue(this.invitedUser?.id, { emitEvent: false });
-        this.getEmailPasswordForm.get('username').patchValue(this.invitedUser?.username, { emitEvent: false });
-     
-        if (invitedUser?.is_submitted === SubmissionType.submitted) {
-          this.storageService.set('sbmttd', SubmissionType.submitted);
+        if (invitedUser) {
+          this.isUserValid = true;
+          
+          this.invitedUser = invitedUser;
+
+          this.getEmailPasswordForm.get(idName).patchValue(this.invitedUser?.id, { emitEvent: false });
+          this.getEmailPasswordForm.get(usernameName).patchValue(this.invitedUser?.username, { emitEvent: false });
+
+          if (invitedUser?.is_submitted === SubmissionType.submitted) {
+            this.storageService.set(isSubmittedName, SubmissionType.submitted);
+          } else {
+            this.storageService.set(isSubmittedName, SubmissionType.pending);
+          }
+          this.checkIfSubmitted();
+
+          if (this.invitedUser?.is_user === true) {
+            this.form.get(isUserName).patchValue(this.invitedUser.is_user, { emitEvent: false });
+            this.form.get(subscriptionName).setValidators(null);
+          } else {
+            this.form.get(subscriptionName).setValidators(Validators.required);
+          }
+          this.form.get(subscriptionName).updateValueAndValidity();
+
+          this.dataSource = this.getUsersStorageValues;
+          this.getUsersForm.patchValue(this.getUsersStorageValues);
+          
+          if (!this.getGeneralInformationStorageValues) {
+            const profile = this.formatProfile(this.invitedUser?.profile);
+            this.form.get(generalInformationName).patchValue(profile);
+          } else {
+            this.getGeneralInformationForm.patchValue(this.getGeneralInformationStorageValues);
+          }
+
+          this.form.get(subscriptionName).patchValue(this.invitedUser?.subscription);
         } else {
-          this.storageService.set('sbmttd', SubmissionType.pending);
+          this.isUserValid = false;
         }
-        this.checkIfSubmitted();
+      });
 
-        if (this.invitedUser?.is_user === true) {
-          this.form.get('is_user').patchValue(this.invitedUser.is_user, { emitEvent: false });
-          this.form.get('subscription').setValidators(null);
-        } else {
-          this.form.get('subscription').setValidators(Validators.required);
-        }
-        this.form.get('subscription').updateValueAndValidity();
-
-        if (!this.getUsersForm.value) {
-          this.getUsersForm.patchValue(this.invitedUser?.customer_users);
-          this.dataSource = this.invitedUser?.customer_users;
-        }
-
-        if (!this.getGeneralInformationStorageValues) {
-          this.form.get('generalInformation').patchValue(this.invitedUser?.profile);
-        }
-
-        this.form.get('subscription').patchValue(this.invitedUser?.subscription);
-      } else {
-        this.isUserValid = false;
-      }
-    });
-
-    this.form.get('subscription').valueChanges.pipe(takeUntil(this.$unsubscribe))
+    this.form.get(subscriptionName).valueChanges
+      .pipe(takeUntil(this.$unsubscribe))
       .subscribe(subscriberId => {
         if (subscriberId) {
           this.store.pipe(select(getSubscriptionByIdSelector(subscriberId)))
@@ -118,6 +122,55 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
             });
         }
       });
+
+    this.form.get(generalInformationName).valueChanges
+      .pipe(takeUntil(this.$unsubscribe))
+      .subscribe(generalInformation => {
+        this.setStorageWithValue(generalInformationName, JSON.stringify(generalInformation));
+      });
+  }
+
+  public formatProfile(profile: IProfile): any {
+    return {
+      id: profile?.id || null,
+      address: profile?.address || null,
+      api_url: profile?.api_url || null,
+      company_address: profile?.company_address || null,
+      company_name: profile?.company_name || null,
+      database_name: profile?.database_name || null,
+      firstname: profile?.firstname || null,
+      language: profile?.language || 'en',
+      lastname: profile?.lastname || null,
+      phone_number: profile?.phone_number || null,
+      website_url: profile?.website_url || null,
+    }
+  }
+
+  public get isUsersModified(): boolean {
+    let isUserModified: boolean = false;
+    if (this.storageService.get(isUserModifiedName)) {
+      isUserModified = JSON.parse(this.storageService.get(isUserModifiedName));
+    }
+    return isUserModified;
+  }
+
+  public setUsersToStorage(): void {
+    this.checkSetType(this.getUsersForm, usersName);
+  }
+
+  public get getUsersStorageValues(): any {
+    let customerUsers: any[] = [];
+    if (this.isUsersModified === false) {
+      customerUsers = this.invitedUser?.customer_users;
+    } else {
+      const userFromStorage = this.storageService.get(usersName) || [];
+      if (typeof (userFromStorage) === 'string') {
+        customerUsers = JSON.parse(userFromStorage);
+      } else {
+        customerUsers = userFromStorage;
+      }
+    }
+    return customerUsers;
   }
 
   public checkIfSubmitted(): void {
@@ -143,7 +196,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
   }
 
   public get getUsersLength(): number {
-    return this.form.get('users')?.value?.length || 0;
+    return this.form.get(usersName)?.value?.length || 0;
   }
 
   public onNext(url: string): void {
@@ -154,8 +207,12 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
     this.router.navigateByUrl(url);
   }
 
-  public setStorageValue(name: string): void {
+  public setStorageFormValue(name: string): void {
     this.storageService.set(name, this.form.value);
+  }
+
+  public setStorageWithValue(name: string, value: any): void {
+    this.storageService.set(name, value);
   }
 
   public getStorageValue(values: string[], index: string): any[] {
@@ -174,63 +231,70 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
     return results;
   }
 
-  public removeUser(item: any): void {
-    let updatedFormUsers = this.form.get('users').value;
-    _.remove(updatedFormUsers, user => user.username === item?.username);
-    this.dataSource = updatedFormUsers;
+  public removeUser(item: IUser): void {
 
-    this.setUsersToStorage();
+  }
+
+  public setUsersToDataSource(users: IUser[]): void {
+    this.dataSource = users;
+    debugger
   }
 
   public addUsersToForm(users: IUser[]): any {
+    this.getUsersForm.reset();
     this.getUsersForm.patchValue(users);
   }
 
   public setEmailPasswordToStorage(): void {
-    this.storageService.set('emailPassword', this.getEmailPasswordForm.value);
+    this.storageService.set(emailPasswordName, this.getEmailPasswordForm.value);
+  }
+
+  private checkSetType(form: FormGroup, name: string): any {
+    if (typeof (form.value) !== 'string') {
+      this.storageService.set(name, JSON.stringify(form.value));
+    } else {
+      this.storageService.set(name, form.value);
+    }
+  }
+
+  private checkGetType(name: string): any {
+    let returnValue: any;
+    const value = this.storageService.get(name);
+    if (value !== '' && typeof (value) === 'string') {
+      returnValue = JSON.parse(value);
+    } else if (value === '') {
+      returnValue = null;
+    } else {
+      returnValue = value;
+    }
+    return returnValue;
   }
 
   public setGeneralInformationToStorage(): void {
-    this.storageService.set('generalInformation', this.getGeneralInformationForm.value);
-  }
-
-  public setUsersToStorage(): void {
-    this.storageService.set('users', this.getUsersForm.value);
-  }
-
-  public get getUsersStorageValues(): any {
-    let customerUsers = this.storageService.get('users') || [];
-    if (customerUsers?.length > 0) {
-      if (Array.isArray(customerUsers)) {
-        customerUsers = customerUsers;
-      } else {
-        customerUsers = JSON.parse(customerUsers);
-      }
-    }
-    return customerUsers;
+    this.checkSetType(this.getGeneralInformationForm, generalInformationName);
   }
 
   public get isSubmitted(): any {
-    return this.storageService.get('sbmttd') === 1;
+    return this.storageService.get(isSubmittedName) === 1;
   }
 
   public get getEmailPasswordStorageValues(): any {
-    return this.storageService.get('emailPassword');
+    return this.storageService.get(emailPasswordName);
   }
 
   public get getGeneralInformationStorageValues(): any {
-    return this.storageService.get('generalInformation');
+    return this.checkGetType(generalInformationName);
   }
 
   public get getUsersForm(): FormGroup {
-    return this.form.get('users') as FormGroup;
+    return this.form.get(usersName) as FormGroup;
   }
 
   public get getEmailPasswordForm(): FormGroup {
-    return this.form.get('emailPassword') as FormGroup;
+    return this.form.get(emailPasswordName) as FormGroup;
   }
 
   public get getGeneralInformationForm(): FormGroup {
-    return this.form.get('generalInformation') as FormGroup;
+    return this.form.get(generalInformationName) as FormGroup;
   }
 }

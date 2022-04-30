@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, retry, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { createCustomerAction, createOnboardingFailedAction, createCustomerSuccessAction, isUserInvitedAction, isUserInvitedSuccessAction, userNotInvitedAction } from './onboarding.actions';
+import { onboardCustomerAction, createOnboardingFailedAction, onboardCustomerSuccessAction, isUserInvitedAction, isUserInvitedSuccessAction, userNotInvitedAction } from './onboarding.actions';
 import { OnboardingService } from '../onboarding.service';
 import { IUser } from 'src/app/models/user.model';
 import { StorageService } from '../../service/storage.service';
 import { Router } from '@angular/router';
+import { isUserModifiedName } from 'src/app/shared/constants/onboarding';
+import { checkGetType } from 'src/app/shared/util/checkType';
 
 @Injectable()
 export class OnboardingEffects {
@@ -16,7 +18,12 @@ export class OnboardingEffects {
       map((response: IUser) => {
         if(response) {
           this.storageService.set('inv', true);
-          if(response?.customer_users?.length > 0) {
+          
+          const isUserModifiedValue = this.storageService.get(isUserModifiedName) || false;
+          const isUserModified = checkGetType(isUserModifiedValue);
+          const hasUserCount = response?.customer_users?.length > 0;
+          
+          if(isUserModified === false && hasUserCount) {
             this.storageService.set('users', JSON.stringify(response?.customer_users));
           }
         } else {
@@ -35,11 +42,11 @@ export class OnboardingEffects {
     map(() =>  null)
   ));
   
-  createCustomerAction$ = createEffect(() => this.actions$.pipe(
-    ofType(createCustomerAction),
+  onboardCustomerAction$ = createEffect(() => this.actions$.pipe(
+    ofType(onboardCustomerAction),
     switchMap(({ payload }) => this.onboardingService.post(payload, 'onboard').pipe(
       map((response: any) => {
-        return createCustomerSuccessAction({ response });
+        return onboardCustomerSuccessAction({ response });
       }),
       catchError(() => {
         return of(createOnboardingFailedAction({ status: true }));

@@ -1,8 +1,8 @@
 
 export interface IOnboarding {
   email_password: IEmailPassword;
-  general_information: IGeneralInformation;
-  user_information: IUserInformation[];
+  profile: IProfile;
+  users: IUserInformation[];
 }
 export interface IUserInformation {
   firstname: string;
@@ -12,7 +12,7 @@ export interface IUserInformation {
   access: string[];
   roles: string[];
 }
-export interface IGeneralInformation {
+export interface IProfile {
   firstname: string;
   lastname: string;
   phone_number: string;

@@ -11,8 +11,11 @@ import { Component, Inject } from '@angular/core';
 export class ConfirmationComponent {
   public svgPath: string = environment.svgPath;
   public actionText: any[] = [{
-    label: 'Delete',
+    label: 'DELETE',
     message: 'Are you sure to cancel?'
+  }, {
+    label: 'REFRESH',
+    message: 'Are you sure to refresh, this will remove current changes?'
   }];
 
   constructor(public dialogRef: MatDialogRef<ConfirmationComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {

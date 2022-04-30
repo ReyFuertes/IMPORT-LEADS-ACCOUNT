@@ -9,7 +9,7 @@ import { ISimpleItem } from 'src/app/shared/generics/generic.model';
 import { RootState } from 'src/app/store/root.reducer';
 import { environment } from 'src/environments/environment';
 import { OnboardingService } from '../../onboarding.service';
-import { createCustomerAction } from '../../store/onboarding.actions';
+import { onboardCustomerAction } from '../../store/onboarding.actions';
 
 @Component({
   selector: 'il-review',
@@ -47,16 +47,15 @@ export class OnboardingReviewComponent extends GenericOnboardingComponent implem
   public onSubmit(): void {
     setTimeout(() => {
       if (this.isFormValid) {
-        this.store.dispatch(createCustomerAction({
-          payload: {
-            email_password: this.getEmailPasswordStorageValues,
-            general_information: this.getGeneralInformationStorageValues,
-            user_information: this.getUsersStorageValues
-          }
-        }))
+        const payload = {
+          email_password: this.getEmailPasswordStorageValues,
+          profile: this.getGeneralInformationStorageValues,
+          users: this.getUsersStorageValues
+        }
+        this.store.dispatch(onboardCustomerAction({ payload }));
       }
     }, 100);
-    this.storageService.set('sbmttd', 1)
+    this.storageService.set('isSub', 1)
     this.router.navigateByUrl(`onboarding/submitted`);
   }
 

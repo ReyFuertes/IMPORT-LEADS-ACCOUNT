@@ -9,7 +9,7 @@ export class NumberOnlyDirective {
   constructor() {}
 
   @HostListener('keydown', [ '$event' ])
-  onKeyDown(event: KeyboardEvent) {
+  public onKeyDown(event: KeyboardEvent) {
     const enteredKey = event.key;
     if (this.specialKeys.indexOf(enteredKey) !== -1 || isNaN(Number(enteredKey)) === false) {
       return;

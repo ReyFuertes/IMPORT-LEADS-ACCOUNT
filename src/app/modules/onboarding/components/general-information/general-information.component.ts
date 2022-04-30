@@ -25,9 +25,7 @@ export class GeneralInformationComponent extends GenericOnboardingComponent impl
 
   }
 
-  ngOnInit(): void {
-    this.getGeneralInformationForm.patchValue(this.getGeneralInformationStorageValues);
-  }
+  ngOnInit(): void {  }
 
   public onPrev(): void {
     super.onPrev(`onboarding/${this.id}`);

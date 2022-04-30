@@ -12,8 +12,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CheckboxModule } from 'primeng/checkbox';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 import { AddUserDialogComponent } from './components/add-user-dialog/add-user-dialog.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';

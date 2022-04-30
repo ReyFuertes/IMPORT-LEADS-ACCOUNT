@@ -1,0 +1,12 @@
+export const idName = 'id';
+export const defaultLanguage = 'en';
+export const passwordName = 'password';
+export const confirmPasswordName = 'confirm_password';
+export const isUserModifiedName = 'isUserModified';
+export const generalInformationName = 'generalInformation';
+export const usersName = 'users';
+export const emailPasswordName = 'emailPassword';
+export const subscriptionName = 'subscription';
+export const usernameName = 'username';
+export const isSubmittedName = 'isSub';
+export const isUserName = 'is_user';

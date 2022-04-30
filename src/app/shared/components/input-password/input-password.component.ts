@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GenericControl } from '../../generics/generic-control';
 import { ISimpleItem } from '../../generics/generic.model';
 
@@ -8,6 +8,9 @@ import { ISimpleItem } from '../../generics/generic.model';
   styleUrls: ['./input-password.component.scss']
 })
 export class InputPasswordComponent extends GenericControl<ISimpleItem> {
+  @Input() public toggleMask: boolean = true;
+  
+  public passwordRegex: string = '^(?=.{8,})';
   constructor() {
     super();
   }

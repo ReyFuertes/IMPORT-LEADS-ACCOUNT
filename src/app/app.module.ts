@@ -9,16 +9,17 @@ import { NumberOnlyDirective } from './shared/directives/number-only.directive';
 import { InputMaxLengthDirective } from './shared/directives/input-maxlen.directive';
 import { AppRoutingModule } from './app.routing.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TranslateModule } from '@ngx-translate/core';
+import { BlockUIModule } from 'primeng/blockui';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/effects/app.effect';
 import { AccessService, SubscriptionService } from './services/api.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { reducers } from './store/root.reducer';
 import { AuthGuard } from './services/auth.guard';
 import { SubscriptionsEffect } from './store/effects/subscription.effects';
+import { TokenInterceptor } from './services/http-token-interceptor';
 
 const materialModules = [
   MatFormFieldModule,
@@ -26,7 +27,9 @@ const materialModules = [
   MatCardModule
 ];
 
-// const primeNgModules = [];
+const primeNgModules = [
+  BlockUIModule
+];
 
 const directives = [
   NumberOnlyDirective,
@@ -49,12 +52,17 @@ const services = [
     HttpClientModule,
     FlexLayoutModule,
     ...materialModules,
-    // ...primeNgModules,
+    ...primeNgModules,
     AppRoutingModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([AppEffects, SubscriptionsEffect]),
   ],
-  providers: [AuthGuard, ...directives, ...services],
+  providers: [
+    AuthGuard,
+    ...directives,
+    ...services,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

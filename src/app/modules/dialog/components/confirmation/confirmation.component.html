@@ -7,12 +7,12 @@
   <div class="content">
     <h2>{{ actionText[data?.action]?.message }}</h2>
   </div>
-  <div class="footer">
-    <button (click)="dialogRef.close(true)" mat-flat-button class="il-button default large" fxLayoutGap="5px">
+  <div class="footer" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <button (click)="dialogRef.close(true)" mat-flat-button class="il-button primary large" fxLayoutGap="5px">
       {{ 'Ok' }}
     </button>
     <div>
-      <button mat-flat-button class="il-button default large" (click)="dialogRef.close(false)">{{ 'Close' }}</button>
+      <button mat-flat-button class="il-button default large" (click)="dialogRef.close(false)">{{ 'Cancel' }}</button>
     </div>
   </div>
 </div>

@@ -18,7 +18,11 @@ export class SubmittedComponent extends GenericOnboardingComponent implements On
     super(store, router, route, storageService, fb);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    setTimeout(() => {
+      this.done();
+    }, 30000);
+  }
 
   public done(): void {
     window.location.href = this.doneRedirectUrl;

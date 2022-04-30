@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from "@ngrx/store";
 import { IUser } from "src/app/models/user.model";
-import { createCustomerSuccessAction, isUserInvitedSuccessAction } from "./onboarding.actions";
+import { onboardCustomerSuccessAction, isUserInvitedSuccessAction } from "./onboarding.actions";
 
 export interface OnboardingState {
   responseStatus: any;
@@ -17,7 +17,7 @@ const onboardingReducer = createReducer(
   on(isUserInvitedSuccessAction, (state, action) => {
     return Object.assign({}, state, { invitedUser: action.response });
   }),
-  on(createCustomerSuccessAction, (state, action) => {
+  on(onboardCustomerSuccessAction, (state, action) => {
     return Object.assign({}, state, { responseStatus: action.response });
   }),
 );

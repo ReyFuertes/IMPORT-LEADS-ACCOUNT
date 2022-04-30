@@ -1,17 +1,26 @@
-<!-- <div *ngIf="($notify | async)?.error" class="notification" [ngClass]="{'error': ($notify | async)?.error }">
+<div *ngIf="($notifySuccess | async)" class="notification" [ngClass]="{'success': ($notifySuccess | async)?.success }">
   <div fxLayout="row" fxLayoutAlign="start center">
-    <p fxFlex>{{($notify | async)?.message}}</p>
-    <div (click)="onClose()" fxFlex="40px">
+    <p fxFlex>{{($notifySuccess | async)?.message}}</p>
+    <div (click)="onCloseSuccessNotification()" fxFlex="40px">
       <i class="pi pi-times"></i>
     </div>
   </div>
 </div>
 
-<p-blockUI [blocked]="(loaderSrv?.isLoading | async)">
+<div *ngIf="($notifyFailed | async)" class="notification error">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <p fxFlex>{{($notifyFailed | async)?.message}}</p>
+    <div (click)="onCloseFailedNotification()" fxFlex="40px">
+      <i class="pi pi-times"></i>
+    </div>
+  </div>
+</div>
+
+ <p-blockUI [blocked]="(loaderSrv?.isLoading | async)">
   <div fxFlexFill fxLayout="row" fxLayoutAlign="center center">
     <img [src]="svgPath + 'loader.svg'" />
   </div>
-</p-blockUI> -->
+</p-blockUI>
 
 <div fxFlexFill>
   <div class="contents" fxFlex>
