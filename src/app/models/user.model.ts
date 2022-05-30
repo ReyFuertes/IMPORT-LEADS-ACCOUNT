@@ -24,7 +24,7 @@ export interface IProfile {
   id?: string;
   language?: string;
   lastname?: string;
-  phone_number?: string;
+  phone?: string;
   website_url?: string;
 }
 export interface IAccess {

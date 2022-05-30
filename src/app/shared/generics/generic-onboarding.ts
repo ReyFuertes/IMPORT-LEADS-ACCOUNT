@@ -43,15 +43,16 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       emailPassword: this.fb.group({
         id: [null, Validators.required],
         username: [null, [Validators.required, Validators.email]],
-        password: [null, [Validators.required, Validators.minLength(6)]],
-        confirm_password: [null, [Validators.required, Validators.minLength(6)]],
-      }, {
-        validator: passwordValidator(passwordName, confirmPasswordName)
+        // password: [null, [Validators.required, Validators.minLength(6)]],
+        // confirm_password: [null, [Validators.required, Validators.minLength(6)]],
+        // , {
+        //   validator: passwordValidator(passwordName, confirmPasswordName)
+        // }
       }),
       generalInformation: this.fb.group({
         firstname: [null, Validators.required],
         lastname: [null, Validators.required],
-        phone_number: [null, Validators.required],
+        phone: [null, Validators.required],
         address: [null, Validators.required],
         company_name: [null, Validators.required],
         company_address: [null, Validators.required],
@@ -141,7 +142,7 @@ export class GenericOnboardingComponent extends GenericDestroyPageComponent {
       firstname: profile?.firstname || null,
       language: profile?.language || 'en',
       lastname: profile?.lastname || null,
-      phone_number: profile?.phone_number || null,
+      phone: profile?.phone || null,
       website_url: profile?.website_url || null,
     }
   }
